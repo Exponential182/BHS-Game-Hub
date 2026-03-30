@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>HOME</h1>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+<h1 >Home</h1>
+<h2>jim</h2>
+<iframe class="game" id="game" src="/static/games/Pukehinau_Peril_Web_v6/index.html" frameborder="0" allow="fullscreen", width="1000px"></iframe>
+<button class="fullscreen" id="fullscreen">Fullscreen</button>
+<script src="/static/scripts/fullscreen.js"></script>
+{% endblock %}
