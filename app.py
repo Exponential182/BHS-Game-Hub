@@ -8,10 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
 
 # Forms
-from flask_wtf import FlaskForm
-from wtforms import (StringField, IntegerField, SubmitField, PasswordField,
-                     BooleanField)
-from wtforms.validators import DataRequired, Length, NumberRange
+
 
 # Passwords
 from flask_login import (LoginManager, UserMixin, current_user, login_user,
@@ -26,20 +23,6 @@ app.config["SECRET_KEY"] = """
 """
 login_manager = LoginManager()
 hasher = PasswordHasher(time_cost=3, parallelism=4, memory_cost=65536)
-
-
-# Forms
-class LoginForm(FlaskForm):
-    username = StringField("Username", validators=[
-            DataRequired(), Length(min=4, max=50)
-        ]
-    )
-    password = PasswordField("Password", validators=[
-            DataRequired(), Length(min=8, max=100)
-        ]
-    )
-    remember = BooleanField("Remember Me?")
-    sumbit = SubmitField("Submit")
 
 
 @login_manager.user_loader
