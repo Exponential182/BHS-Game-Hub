@@ -2,16 +2,9 @@ from flask import Flask
 from routes import init_routes
 from models import Game, User, Jam, Base
 
-# SQL Alchemy
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import select
-from sqlalchemy.exc import NoResultFound
-
-# Passwords
-from flask_login import (LoginManager, current_user, login_user,
-                         login_required, logout_user)
-from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError
 
 
 app = Flask(__name__)
@@ -19,7 +12,6 @@ app.config["SECRET_KEY"] = """
     ab4cdb98da867b286998c0fcabe0e4cfd58486d007fe9c2b2ce5c39f398713ec
 """
 login_manager = LoginManager()
-hasher = PasswordHasher(time_cost=3, parallelism=4, memory_cost=65536)
 
 
 @login_manager.user_loader
@@ -32,11 +24,11 @@ def load_user(user_id):
     return User(id=data.id)
 
 
-init_routes(app, login_manager)
 db = SQLAlchemy(model_class=Base)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///game_hub.db"
 db.init_app(app)
 login_manager.init_app(app)
+init_routes(app, login_manager, db)
 
 if __name__ == "__main__":
     app.run(debug=True)

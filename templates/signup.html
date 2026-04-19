@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<form method="POST">
+    {{form.hidden_tag()}}
+    {{form.email.label}}
+    {{form.email(class_="w3-input")}}
+    <br>
+    {{form.username.label}}
+    {{form.username(class_="w3-input")}}
+    <br>
+    {{form.password.label}}
+    {{form.password(class_="w3-input")}}
+    <br>
+    {{form.repeat_password.label}}
+    {{form.repeat_password(class_="w3-input")}}
+    <br>
+    {{form.sumbit(class_="w3-btn w3-teal")}}
+</form>
+{% endblock %}
