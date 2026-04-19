@@ -7,11 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
 
-# Forms
-
-
 # Passwords
-from flask_login import (LoginManager, UserMixin, current_user, login_user,
+from flask_login import (LoginManager, current_user, login_user,
                          login_required, logout_user)
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
@@ -35,7 +32,7 @@ def load_user(user_id):
     return User(id=data.id)
 
 
-init_routes(app)
+init_routes(app, login_manager)
 db = SQLAlchemy(model_class=Base)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///game_hub.db"
 db.init_app(app)
