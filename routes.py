@@ -43,7 +43,7 @@ def init_routes(app: Flask, login_manager: LoginManager, db: SQLAlchemy):
     def signup():
         signup_form = SignupForm()
         if signup_form.validate_on_submit():
-            email = signup_form.username.data
+            email = signup_form.email.data
             username = signup_form.username.data
             password = signup_form.password.data
             repeat_password = signup_form.repeat_password.data
@@ -51,7 +51,7 @@ def init_routes(app: Flask, login_manager: LoginManager, db: SQLAlchemy):
                 statement = select(User).where(User.email == email)
                 user_info = db.session.execute(statement.limit(1)).first()
                 if user_info:
-                    return redirect("login.html", form=LoginForm())  # Add error message?
+                    return redirect("/login")  # Add error message?
 
                 new_user = User(
                     email=email,
