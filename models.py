@@ -36,6 +36,7 @@ class Game(Base):
 class User(Base, UserMixin):
     __tablename__ = "User"
     id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column()
     username: Mapped[str] = mapped_column()
     password_hash: Mapped[str] = mapped_column()
     is_admin: Mapped[bool] = mapped_column()
