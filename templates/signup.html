@@ -3,7 +3,7 @@
 <form method="POST">
     {{form.hidden_tag()}}
     {{form.email.label}}
-    {{form.email(class_="w3-input")}}
+    {{form.email(class_="w3-input", type_="email", autocomplete_="on")}}
     <br>
     {{form.username.label}}
     {{form.username(class_="w3-input")}}

@@ -9,14 +9,14 @@ class LoginForm(FlaskForm):
         "Username",
         validators=[
             DataRequired(),
-            Length(min=4, max=50),
+            Length(min=4, max=32),
         ],
     )
     password = PasswordField(
         "Password",
         validators=[
             DataRequired(),
-            Length(min=8, max=100),
+            Length(min=8, max=64),
         ],
     )
     remember = BooleanField("Remember Me?")
@@ -27,28 +27,29 @@ class SignupForm(FlaskForm):
     email = EmailField(
         "Email",
         validators=[
-            DataRequired()
+            DataRequired(),
+            Length(min=1, max=320),
         ],
     )
     username = StringField(
         "Username",
         validators=[
             DataRequired(),
-            Length(min=4, max=50)
+            Length(min=4, max=32)
         ],
     )
     password = PasswordField(
         "Password",
         validators=[
             DataRequired(),
-            Length(min=8, max=100)
+            Length(min=8, max=64)
         ],
     )
     repeat_password = PasswordField(
         "Repeat Password",
         validators=[
             DataRequired(),
-            Length(min=8, max=100),
+            Length(min=8, max=64),
         ],
     )
     sumbit = SubmitField("Submit")
