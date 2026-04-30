@@ -1,3 +1,37 @@
-html{
-    background-color: aquamarine;
+html {
+    background-color: #DFDFDF;
+}
+
+.title {
+    font-family: "Domine", serif;
+}
+
+.body {
+    font-family: "Roboto", sans-serif;
+}
+
+.flex-align-right {
+    margin-left: auto;
+}
+
+/* Navbar */
+.navbar-flex {
+    display: flex;
+    flex-direction: row;
+    min-height: 2rem;
+    font-size: 1.6rem;
+    background: #106030;
+}
+
+.navbar-link {
+    padding: 0.5rem 1rem;
+    margin: 0%;
+    color: #BBBBBB;
+    text-decoration: none;
+    align-self: middle;
+}
+
+.navbar-link:hover {
+    background-color: #1B9D4F;
+    color: #F5F5F5;
 }

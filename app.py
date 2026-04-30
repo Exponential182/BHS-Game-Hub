@@ -21,7 +21,7 @@ def load_user(user_id):
     data = data.scalar()
     if data is None:
         return None
-    return User(id=data.id)
+    return data
 
 
 db = SQLAlchemy(model_class=Base)
