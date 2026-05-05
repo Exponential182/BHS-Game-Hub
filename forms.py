@@ -7,6 +7,9 @@ from wtforms.validators import DataRequired, Length
 class LoginForm(FlaskForm):
     username = StringField(
         "Username",
+        render_kw={
+            "placeholder": "Username"
+        },
         validators=[
             DataRequired(),
             Length(min=4, max=32),
@@ -14,6 +17,9 @@ class LoginForm(FlaskForm):
     )
     password = PasswordField(
         "Password",
+        render_kw={
+            "placeholder": "Password"
+        },
         validators=[
             DataRequired(),
             Length(min=8, max=64),
@@ -26,6 +32,9 @@ class LoginForm(FlaskForm):
 class SignupForm(FlaskForm):
     email = EmailField(
         "Email",
+        render_kw={
+            "placeholder": "Email"
+        },
         validators=[
             DataRequired(),
             Length(min=1, max=320),
@@ -33,6 +42,9 @@ class SignupForm(FlaskForm):
     )
     username = StringField(
         "Username",
+        render_kw={
+            "placeholder": "Username"
+        },
         validators=[
             DataRequired(),
             Length(min=4, max=32)
@@ -40,6 +52,9 @@ class SignupForm(FlaskForm):
     )
     password = PasswordField(
         "Password",
+        render_kw={
+            "placeholder": "Password"
+        },
         validators=[
             DataRequired(),
             Length(min=8, max=64)
@@ -47,6 +62,9 @@ class SignupForm(FlaskForm):
     )
     repeat_password = PasswordField(
         "Repeat Password",
+        render_kw={
+            "placeholder": "Confirm Password"
+        },
         validators=[
             DataRequired(),
             Length(min=8, max=64),
