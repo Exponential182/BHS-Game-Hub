@@ -89,4 +89,7 @@ header, footer {
     border-radius: 100%;
 }
 
-/* Login Page */
+.email-input {
+    max-width: 100%;
+    border: #BBBBBB solid 1.5px;
+}

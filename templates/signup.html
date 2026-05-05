@@ -1,19 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
-<form method="POST">
-    {{form.hidden_tag()}}
-    {{form.email.label}}
-    {{form.email(class_="w3-input", type_="email", autocomplete_="on")}}
-    <br>
-    {{form.username.label}}
-    {{form.username(class_="w3-input")}}
-    <br>
-    {{form.password.label}}
-    {{form.password(class_="w3-input")}}
-    <br>
-    {{form.repeat_password.label}}
-    {{form.repeat_password(class_="w3-input")}}
-    <br>
-    {{form.sumbit(class_="w3-btn w3-teal")}}
+<form class="account-form-container" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.email(
+        class_="w3-input email-input",
+        type_="email",
+    ) }}
+    {{ form.username(
+        class_="w3-input username-input",
+    ) }}
+    {{ form.password(
+        class_="w3-input password-input",
+    ) }}
+    {{ form.repeat_password(
+        class_="w3-input password-input",
+    ) }}
+    {{ form.sumbit(
+        class_="w3-btn w3-teal",
+    ) }}
 </form>
 {% endblock %}
