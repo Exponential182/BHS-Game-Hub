@@ -1,5 +1,22 @@
 html {
     background-color: #DFDFDF;
+    /* Set body font as default font */
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+header, footer {
+    flex-shrink: 0;
+    flex-grow: 0;
 }
 
 .title {
@@ -11,7 +28,7 @@ html {
 }
 
 .flex-align-right {
-    margin-left: auto;
+    margin-left: auto !important;
 }
 
 /* Navbar */
@@ -20,7 +37,7 @@ html {
     flex-direction: row;
     min-height: 2rem;
     font-size: 1.6rem;
-    background: #106030;
+    background-color: #106030;
 }
 
 .navbar-link {
@@ -35,3 +52,41 @@ html {
     background-color: #1B9D4F;
     color: #F5F5F5;
 }
+
+/* Footer */
+.footer-flex {
+    display: flex;
+    flex-direction: row;
+    min-height: 2rem;
+    font-size: 1.6rem;
+    background-color: #106030;
+}
+
+/* Login/Signup Pages - Generic */
+.account-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F5F5F5;
+    width: 30%;
+    margin: 2rem auto;
+    padding: 2rem;
+    gap: 2rem;
+    box-shadow: 0rem 0rem 0.5rem 0.1rem #BBBBBB;
+}
+
+.username-input {
+    max-width: 100%;
+    border: #BBBBBB solid 1.5px;
+}
+
+.password-input {
+    max-width: 100%;
+    border: #BBBBBB solid 1.5px;
+}
+
+.modern-checkbox {
+    border-radius: 100%;
+}
+
+/* Login Page */

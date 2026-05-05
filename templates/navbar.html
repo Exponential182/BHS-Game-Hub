@@ -4,10 +4,10 @@
     <a href="/jams" class="navbar-link">Game Jams</a>
     
     {% if current_user.is_authenticated %}
-        <a href="/logout" class="navbar-link flex-right-force">Logout</a>
+        <a href="/logout" class="navbar-link flex-align-right">Logout</a>
         <h2>{{current_user.username}}</h2>
     {% else %}
-        <a href="/login" class="navbar-link flex-right-force">Login</a>
+        <a href="/login" class="navbar-link flex-align-right">Login</a>
         <a href="/signup" class="navbar-link">Signup</a>
     {% endif %}
 </nav>

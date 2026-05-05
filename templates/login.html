@@ -1,15 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
-<form method="POST">
-    {{form.hidden_tag()}}
-    {{form.username.label}}
-    {{form.username(class_="w3-input")}}
-    <br>
-    {{form.password.label}}
-    {{form.password(class_="w3-input")}}
-    <br>
-    {{form.remember.label}} {{form.remember}}
-    <br>
+<form class="account-form-container" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.username(
+        class_="w3-input username-input",
+        placeholder="Username",
+    ) }}
+    {{ form.password(
+        class_="w3-input password-input",
+        placeholder="Password",
+    ) }}
+    <div>
+        {{form.remember(class_="w3-check modern-checkbox")}}
+        {{form.remember.label(class_="body")}}
+    </div>
     {{form.sumbit(class_="w3-btn w3-teal")}}
 </form>
 {% endblock %}
