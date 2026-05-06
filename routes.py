@@ -66,7 +66,7 @@ def init_routes(app: Flask, login_manager: LoginManager, db: SQLAlchemy):
                 # send error message about invalid password
                 pass
         return render_template("signup.html", form=signup_form)
-    
+
     @app.route("/logout")
     def logout():
         logout_user()

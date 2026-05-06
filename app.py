@@ -1,6 +1,6 @@
 from flask import Flask
 from routes import init_routes
-from models import Game, User, Jam, Base
+from models import User, Base
 
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
