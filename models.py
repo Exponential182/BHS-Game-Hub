@@ -5,9 +5,7 @@ from sqlalchemy.orm import (DeclarativeBase, Mapped, mapped_column,
 from sqlalchemy import String, ForeignKey
 from flask_login import UserMixin
 
-
-class Base(DeclarativeBase):
-    pass
+from extensions import Base
 
 
 class Game(Base):
