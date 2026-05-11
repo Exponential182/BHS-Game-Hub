@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy.orm import (DeclarativeBase, Mapped, mapped_column,
-                            relationship)
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, ForeignKey
 from flask_login import UserMixin
 
@@ -13,9 +12,14 @@ class Game(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
     description: Mapped[str] = mapped_column()
-    file_path: Mapped[str] = mapped_column()
-    is_html5: Mapped[bool] = mapped_column()
-    is_downloadable: Mapped[bool] = mapped_column()
+    has_html5: Mapped[bool] = mapped_column()
+    html5_file_path: Mapped[str] = mapped_column()
+    has_windows: Mapped[bool] = mapped_column()
+    windows_file_path: Mapped[str] = mapped_column()
+    has_mac: Mapped[bool] = mapped_column()
+    mac_file_path: Mapped[str] = mapped_column()
+    has_linux: Mapped[bool] = mapped_column()
+    linux_file_path: Mapped[str] = mapped_column()
     genre: Mapped[str] = mapped_column()
     tags: Mapped[str] = mapped_column()
     image_url: Mapped[str] = mapped_column()
