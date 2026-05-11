@@ -62,7 +62,7 @@ header, footer {
     background-color: #106030;
 }
 
-/* Login/Signup Pages - Generic */
+/* Login/Signup Pages */
 .account-form-container {
     display: flex;
     flex-direction: column;
@@ -92,4 +92,32 @@ header, footer {
 .email-input {
     max-width: 100%;
     border: #BBBBBB solid 1.5px;
+}
+
+/* Collections Pages (Games or Jams) */
+.collection-flex {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Games Page */
+.game-filters {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+    background-color: #BBBBBB;
+    padding: 1rem;
+}
+
+.games {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1rem;
+    width: 100%;
+}
+
+.game-box {
+    padding: 0.5rem;
+    width: 100%;
+    
 }

@@ -9,7 +9,11 @@
     <!-- Gives Priority to Style.css -->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
     <link rel="stylesheet" href="/static/css/style.css">
-    <title>Burnside High School Game Hub</title>
+    {% if title %}
+        <title>{{title}}</title>
+    {% else %}
+        <title>Burnside High School Game Hub</title>
+    {% endif %}
 </head>
     <body>
         <header>

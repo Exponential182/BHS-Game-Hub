@@ -85,4 +85,6 @@ def logout():
 
 @main_bp.route("/games")
 def games():
-    return render_template("games.html")
+    statement = select(Game)
+    game_info = db.session.execute(statement).scalars()
+    return render_template("games.html", game_data=game_info)

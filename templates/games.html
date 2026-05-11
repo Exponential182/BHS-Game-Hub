@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Game Cover images are 630 by 500 (1.26:1) for itch parity-->
+<!-- Embed Images are 640 by 360  (16:9)-->
+<div class="collection-flex">
+    <div class="game-filters">
+        <p>Replace with filters later adakshdkjashdkja ahsdkjhaskjdh</p>
+    </div>
+    <div class="games">
+        {% for game in game_info %}
+            {{ game }}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
