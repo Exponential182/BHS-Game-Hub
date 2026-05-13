@@ -105,7 +105,7 @@ header, footer {
 .game-filters {
     display: flex;
     flex-direction: column;
-    width: 20rem;
+    width: 15rem;
     background-color: #BBBBBB;
     padding: 1rem;
 }
@@ -115,7 +115,7 @@ header, footer {
     grid-template-columns: repeat(4, 1fr);
     padding: 1rem;
     width: 100%;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 .game-box {
@@ -126,6 +126,7 @@ header, footer {
 
 .game-box-image {
     border: #BBBBBB solid 1px;
+    max-width: 100%;
 }
 
 .game-box-title {
@@ -135,6 +136,11 @@ header, footer {
 }
 
 .game-box-description{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     color: #333333;
     margin: 0.2rem 0rem;
     font-size: 0.9rem;
