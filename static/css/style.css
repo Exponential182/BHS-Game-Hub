@@ -122,6 +122,11 @@ header, footer {
     padding: 0.5rem;
     width: 100%;
     background-color: #F5F5F5;
+    height: fit-content;
+}
+
+.game-box *:empty:not(img){
+    display: none;
 }
 
 .game-box-image {
@@ -153,6 +158,7 @@ header, footer {
 .game-box-compatibility {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 0.3rem;
 }
 
@@ -162,4 +168,5 @@ header, footer {
     border-radius: 0.5rem;
     font-size: 0.7rem;
     padding: 0.15rem 0.3rem;
+    margin: 0.1rem 0rem;
 }
