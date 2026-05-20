@@ -20,7 +20,8 @@ class Game(Base):
     mac_file_path: Mapped[str] = mapped_column()
     has_linux: Mapped[bool] = mapped_column()
     linux_file_path: Mapped[str] = mapped_column()
-    genre: Mapped[str] = mapped_column()
+    genre_id: Mapped[int] = mapped_column(ForeignKey("Genre.id"))
+    genre: Mapped["Genre"] = relationship(back_populates="games")
     tags: Mapped[str] = mapped_column()
     image_url: Mapped[str] = mapped_column()
     overall_rating: Mapped[float] = mapped_column()
@@ -103,3 +104,10 @@ class JamGame(Base):
         ForeignKey("Jam.id"),
         primary_key=True,
     )
+
+
+class Genre(Base):
+    __tablename__ = "Genre"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column()
+    games: Mapped[list["Game"]] = relationship(back_populates="genre")
