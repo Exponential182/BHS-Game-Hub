@@ -4,7 +4,30 @@
 <!-- Embed Images are 640 by 360  (16:9)-->
 <div class="collection-flex">
     <div class="game-filters">
-        <p>Replace with filters later adakshdkjashdkja ahsdkjhaskjdh</p>
+        <p class="filter-header title">
+            Game Filters
+        </p>
+        {% if request.args %}
+            <div class="reset-filters-container">
+                <a href="{{url_for('main.games')}}" class="reset-filters">Clear Filters</a>
+            </div>
+        {% endif %}
+        {% if request.args.get("genre") %}
+            <div class="game-filter-selected">
+                <p class="game-filter-heading title">Genre</p>
+                <p class="game-filter-selected">
+                    {{request.args.get("genre")}}
+                </p>
+                <p class="game-filter-expand">More Options</p>
+            </div>
+        {% else %}
+            <div class="game-filter-unselected">
+                <p class="game-filter-heading title"> Genre </p>
+                {% for genre in genre_data %}
+                    <p class="game-filter-option">{{ genre.name }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
     <div class="games">
         {% for game in game_data %}
@@ -31,7 +54,7 @@
                             Mac
                         </p>
                     {% endif %}
-                    {% if game.has_ %}linux
+                    {% if game.has_linux %}
                         <p class="game-os-badge">
                             Linux
                         </p>

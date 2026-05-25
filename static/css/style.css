@@ -106,7 +106,7 @@ header, footer {
     display: flex;
     flex-direction: column;
     width: 15rem;
-    background-color: #BBBBBB;
+    background-color: #DFDFDF;
     padding: 1rem;
 }
 
@@ -131,7 +131,8 @@ header, footer {
 
 .game-box-image {
     border: #BBBBBB solid 1px;
-    max-width: 100%;
+    width: 100%;
+    object-fit: contain;
 }
 
 .game-box-title {
@@ -174,4 +175,42 @@ header, footer {
     font-size: 0.7rem;
     padding: 0.15rem 0.3rem;
     margin: 0.1rem 0rem;
+}
+
+.game-filters {
+    font-size: 1rem;
+    background-color: ;
+}
+
+.game-filter-heading {
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 0.4rem 0rem 0.2rem;
+}
+
+.game-filter-option{
+    margin: 0;
+    padding-left: 0.6rem;
+}
+
+.game-filter-selected {
+    background-color: #DFDFDF;
+}
+
+.filter-header {
+    font-size: 1.5rem;
+    margin: 0rem 0rem 0.3rem
+}
+
+.reset-filters-container{
+    margin: 0.7rem 0rem;
+}
+
+.reset-filters {
+    color: #F5F5F5;
+    background-color: #1B9D4F;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.6rem;
+    text-decoration: none;
 }

@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import current_user, login_user, login_required, logout_user
 from sqlalchemy import select
 from argon2.exceptions import VerifyMismatchError
 from sqlalchemy.exc import NoResultFound
 
-from models import Game, Jam, User
+from models import Game, Jam, User, Genre
 from forms import LoginForm, SignupForm
 from extensions import hasher, db, login_manager
 
@@ -86,5 +86,15 @@ def logout():
 @main_bp.route("/games")
 def games():
     statement = select(Game)
+    genre_search = request.args.get("genre", default=None)
+
+    if genre_search is not None:
+        statement = statement.join(Genre).where(Genre.name == genre_search)
+
+    genres = db.session.execute(select(Genre)).scalars()
     game_info = db.session.execute(statement).scalars()
-    return render_template("games.html", game_data=game_info)
+    return render_template(
+        "games.html",
+        game_data=game_info,
+        genre_data=genres,
+    )
