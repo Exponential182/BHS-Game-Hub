@@ -13,7 +13,7 @@
             </div>
         {% endif %}
         {% if request.args.get("genre") %}
-            <div class="game-filter-selected">
+            <div>
                 <p class="game-filter-heading title">Genre</p>
                 <p class="game-filter-selected">
                     {{request.args.get("genre")}}
@@ -24,7 +24,11 @@
             <div class="game-filter-unselected">
                 <p class="game-filter-heading title"> Genre </p>
                 {% for genre in genre_data %}
-                    <p class="game-filter-option">{{ genre.name }}</p>
+                    <p class="game-filter-option">
+                        <a class="game-filter-link" href="{{ update_arg('genre', genre.name) }}">
+                            {{ genre.name }}
+                        </a>
+                    </p>
                 {% endfor %}
             </div>
         {% endif %}
