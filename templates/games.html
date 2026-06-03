@@ -14,11 +14,17 @@
         {% endif %}
         {% if request.args.get("genre") %}
             <div>
-                <p class="game-filter-heading title">Genre</p>
+                <p class="game-filter-heading title">
+                    Genre 
+                </p>
                 <p class="game-filter-selected">
                     {{request.args.get("genre")}}
                 </p>
-                <p class="game-filter-expand">More Options</p>
+                <p class="game-filter-clear">
+                    <a href="{{update_arg('genre', None)}}">
+                        <i>Clear</i>
+                </a>
+                </p>
             </div>
         {% else %}
             <div class="game-filter-unselected">
