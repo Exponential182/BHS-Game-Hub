@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, abort
 from flask_login import current_user, login_user, login_required, logout_user
 from sqlalchemy import select
 from argon2.exceptions import VerifyMismatchError
@@ -98,3 +98,18 @@ def games():
         game_data=game_info,
         genre_data=genres,
     )
+
+
+@main_bp.app_errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html")
+
+
+@main_bp.app_errorhandler(500)
+def internal_server_error(error):
+    return render_template("500.html")
+
+
+@main_bp.route("/force500")
+def force500():
+    abort(500)

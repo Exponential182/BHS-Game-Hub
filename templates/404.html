@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="error-body">
+    <p class="error-title title">404 Error - Page Not Found</p>
+    <br>
+    <p class="error-description">It appears you've gotten lost or the url is invalid!</p>
+    <br>
+    <div class="error-return"><a href="{{url_for('main.home')}}">Return to Home Page</a>
+    </div>
+</div>
+{% endblock %}
