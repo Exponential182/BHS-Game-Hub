@@ -1,3 +1,4 @@
+
 from flask import Blueprint, render_template, redirect, url_for, request, abort
 from flask_login import current_user, login_user, login_required, logout_user
 from sqlalchemy import select
@@ -100,8 +101,21 @@ def games():
     )
 
 
+@main_bp.route("/game/<int:game_id>")
+def game_page(game_id):
+    game_stmt = select(Game).where(Game.id == game_id)
+
+    game_info = db.session.execute(game_stmt).scalar_one_or_none()
+    if game_info is None:
+        abort(404)
+    return render_template(
+        "game.html",
+        game_data=game_info
+    )
+
+
 @main_bp.app_errorhandler(404)
-def page_not_found(error):
+def page_not_found(errors):
     return render_template("404.html")
 
 
