@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, Length
 
 
 class LoginForm(FlaskForm):
+    """Form template for login page."""
     username = StringField(
         "Username",
         render_kw={
@@ -30,6 +31,7 @@ class LoginForm(FlaskForm):
 
 
 class SignupForm(FlaskForm):
+    """Form template for signup page."""
     email = EmailField(
         "Email",
         render_kw={

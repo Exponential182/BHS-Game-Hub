@@ -4,7 +4,10 @@ from flask_login import LoginManager
 from argon2 import PasswordHasher
 
 
+# Not created in models.py so database can be delceared with hasher,
+# login manager, etc.
 class Base(DeclarativeBase):
+    """ Base Class for all databse tables."""
     pass
 
 

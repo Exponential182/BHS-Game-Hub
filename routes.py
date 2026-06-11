@@ -13,8 +13,10 @@ main_bp = Blueprint("main", __name__)
 auth_bp = Blueprint("auth", __name__)
 
 
+# Flask-login's internal user loader (deprecated for lookups by current_user)
 @login_manager.user_loader
 def load_user(user_id):
+    """ Loads a users data by id, returns a User Object """
     statement = select(User).limit(1).where(User.id == int(user_id))
     data = db.session.execute(statement)
     data = data.scalar()
@@ -25,11 +27,13 @@ def load_user(user_id):
 
 @main_bp.route("/")
 def home():
+    """Render the home page."""
     return render_template("home.html")
 
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
+    """Render the login page and validate login credentials."""
     login_form = LoginForm()
     if login_form.validate_on_submit():
         username = login_form.username.data
@@ -51,6 +55,7 @@ def login():
 
 @auth_bp.route("/signup", methods=["GET", "POST"])
 def signup():
+    """Render the signup page and add new users to database."""
     signup_form = SignupForm()
     if signup_form.validate_on_submit():
         email = signup_form.email.data
@@ -80,12 +85,14 @@ def signup():
 
 @auth_bp.route("/logout")
 def logout():
+    """Logout the current user."""
     logout_user()
     return redirect(url_for("main.home"))
 
 
 @main_bp.route("/games")
 def games():
+    """Render the game catelouge page."""
     statement = select(Game)
     genre_search = request.args.get("genre", default=None)
 
@@ -103,6 +110,7 @@ def games():
 
 @main_bp.route("/game/<int:game_id>")
 def game_page(game_id):
+    """Render the game specific page"""
     game_stmt = select(Game).where(Game.id == game_id)
 
     game_info = db.session.execute(game_stmt).scalar_one_or_none()
@@ -114,16 +122,22 @@ def game_page(game_id):
     )
 
 
+# Redirect errors to specific pages to better handle crashes/bad urls.
 @main_bp.app_errorhandler(404)
-def page_not_found(errors):
+def page_not_found(_error):
+    """Render the 404 error page."""
+    _error = _error  # Fixes unsued variable errors.
     return render_template("404.html")
 
 
 @main_bp.app_errorhandler(500)
-def internal_server_error(error):
+def internal_server_error(_error):
+    _error = _error  # Fixes unsued variable errors.
+    """Render the 500 error page."""
     return render_template("500.html")
 
 
 @main_bp.route("/force500")
 def force500():
+    """Test route for testing the 500 page."""
     abort(500)

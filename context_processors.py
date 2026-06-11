@@ -5,9 +5,15 @@ def utilities():
     return {"update_arg": update_arg}
 
 
+# Needed for filter clearing
 def update_arg(key, value):
+    """Update the url key argument. Return the new web url.
+
+    Uses None for removing and argument from the url.
+    """
     args = request.args.copy()
 
+    # Uses None as a clear condition so True/Fa;se can still be used as args.
     if value is None and key in args:
         args.pop(key)
     else:
