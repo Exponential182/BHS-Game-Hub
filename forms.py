@@ -26,7 +26,7 @@ class LoginForm(FlaskForm):
         ],
     )
     remember = BooleanField("Remember Me?")
-    sumbit = SubmitField("Submit")
+    submit = SubmitField("Submit")
 
 
 class SignupForm(FlaskForm):
@@ -70,4 +70,4 @@ class SignupForm(FlaskForm):
             Length(min=8, max=64),
         ],
     )
-    sumbit = SubmitField("Submit")
+    submit = SubmitField("Submit")
