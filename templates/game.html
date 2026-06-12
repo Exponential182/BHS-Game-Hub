@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<div class="game-page-flex">
+    {% if game_data.has_html %}
+        <iframe src="{{game_data.html_file_path}}" frameborder="0" width="100%"></iframe>
+    {% endif %}
+</div>
 {{game_data.__dict__}}
 
 {% endblock %}

@@ -132,8 +132,8 @@ def page_not_found(_error):
 
 @main_bp.app_errorhandler(500)
 def internal_server_error(_error):
-    _error = _error  # Fixes unsued variable errors.
     """Render the 500 error page."""
+    _error = _error  # Fixes unsued variable errors.
     return render_template("500.html")
 
 
