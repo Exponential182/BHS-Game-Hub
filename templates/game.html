@@ -1,10 +1,16 @@
 {% extends "layout.html" %}
+{% block style %}
+<link rel="stylesheet" href="/static/css/game.css">
+{% endblock%}
 {% block content %}
 <div class="game-page-flex">
-    {% if game_data.has_html %}
-        <iframe src="{{game_data.html_file_path}}" frameborder="0" width="100%"></iframe>
-    {% endif %}
+    <div class="game-page-primary-column">
+        <h5>test test testy</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque nam nemo et optio minus earum deserunt fugiat dolore assumenda molestias corrupti distinctio sunt inventore cum consequuntur, ut ducimus incidunt. Quam.</p>
+    </div>
+    <!-- {% if game_data.has_html %}
+        <iframe class="game-page-web-game" src="{{game_data.html_file_path}}" frameborder="0" widht="100%"></iframe>
+    {% endif %} -->
 </div>
-{{game_data.__dict__}}
 
 {% endblock %}
