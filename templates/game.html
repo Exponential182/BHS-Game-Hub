@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block style %}
-<link rel="stylesheet" href="/static/css/game.css">
+<link rel="stylesheet" href="{{url_for('static', filename='css/game.css')}}">
 {% endblock%}
 {% block content %}
 <div class="game-page-flex">

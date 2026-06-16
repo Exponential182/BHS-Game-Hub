@@ -1,0 +1,12 @@
+.game-page-flex {
+    display: flex;
+    flex-direction: row;
+    margin: 0px auto;
+    background-color: #1B9D4F;
+    max-width: 80%;
+    min-width: 60%;
+}
+
+.game-page-primary-column{
+    max-width: 75%;
+}

@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/games.css')}}">
+{% endblock %}
 {% block content %}
 <!-- Game Cover images are 630 by 500 (1.26:1) for itch parity-->
 <!-- Embed Images are 640 by 360  (16:9)-->
