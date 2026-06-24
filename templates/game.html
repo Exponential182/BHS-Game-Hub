@@ -3,14 +3,16 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/game.css')}}">
 {% endblock%}
 {% block content %}
-<div class="game-page-flex">
+<div class="game-page-flex game-page-flex-small">
     <div class="game-page-primary-column">
-        <h5>test test testy</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque nam nemo et optio minus earum deserunt fugiat dolore assumenda molestias corrupti distinctio sunt inventore cum consequuntur, ut ducimus incidunt. Quam.</p>
+        {% if game_data.has_html %}
+        <iframe class="game-page-web-game" src="{{game_data.html_file_path}}" frameborder="0"></iframe>
+        {% endif %}
+        {{game_data.description}}
+        <p class="game-description">
+            {{game_data.description}}
+        </p>
     </div>
-    <!-- {% if game_data.has_html %}
-        <iframe class="game-page-web-game" src="{{game_data.html_file_path}}" frameborder="0" widht="100%"></iframe>
-    {% endif %} -->
 </div>
 
 {% endblock %}

@@ -14,6 +14,7 @@ class Game(Base):
     __tablename__ = "Game"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
+    tagline: Mapped[str] = mapped_column()
     description: Mapped[str] = mapped_column()
     has_html: Mapped[bool] = mapped_column()
     html_file_path: Mapped[str] = mapped_column()
