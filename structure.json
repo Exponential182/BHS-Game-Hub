@@ -1,0 +1,296 @@
+{
+    "type": "database",
+    "name": "game_hub",
+    "objects": [
+        {
+            "type": "table",
+            "database": null,
+            "name": "Game",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE Game (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, tagline TEXT, description TEXT, has_html INTEGER, html_file_path TEXT, has_windows INTEGER, windows_file_path TEXT, has_mac INTEGER, mac_file_path TEXT, has_linux INTEGER, linux_file_path TEXT, genre_id TEXT REFERENCES Genre (id), tags TEXT, image_url TEXT, overall_rating REAL, rating_count INTEGER)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "name",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "tagline",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "description",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "has_html",
+                    "type": "INTEGER"
+                },
+                {
+                    "name": "html_file_path",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "has_windows",
+                    "type": "INTEGER"
+                },
+                {
+                    "name": "windows_file_path",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "has_mac",
+                    "type": "INTEGER"
+                },
+                {
+                    "name": "mac_file_path",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "has_linux",
+                    "type": "INTEGER"
+                },
+                {
+                    "name": "linux_file_path",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "genre_id",
+                    "type": "TEXT",
+                    "constraints": [
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES Genre (id)"
+                        }
+                    ]
+                },
+                {
+                    "name": "tags",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "image_url",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "overall_rating",
+                    "type": "REAL"
+                },
+                {
+                    "name": "rating_count",
+                    "type": "INTEGER"
+                }
+            ],
+            "rows": [
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "Genre",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE Genre (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "name",
+                    "type": "TEXT"
+                }
+            ],
+            "rows": [
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "Jam",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE Jam (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, decription TEXT, start_time INTEGER, end_time INTEGER)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "name",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "decription",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "start_time",
+                    "type": "INTEGER"
+                },
+                {
+                    "name": "end_time",
+                    "type": "INTEGER"
+                }
+            ],
+            "rows": [
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "JamGame",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE JamGame (game_id INTEGER REFERENCES Game (id), jam_id INTEGER REFERENCES Jam (id))",
+            "columns": [
+                {
+                    "name": "game_id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES Game (id)"
+                        }
+                    ]
+                },
+                {
+                    "name": "jam_id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES Jam (id)"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "User",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE User (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, username TEXT, password_hash TEXT, is_admin INTEGER)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "email",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "username",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "password_hash",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "is_admin",
+                    "type": "INTEGER"
+                }
+            ],
+            "rows": [
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "UserGame",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE UserGame (user_id INTEGER REFERENCES User (id), game_id INTEGER REFERENCES Game (id))",
+            "columns": [
+                {
+                    "name": "user_id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES User (id)"
+                        }
+                    ]
+                },
+                {
+                    "name": "game_id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES Game (id)"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "UserJam",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE UserJam (user_id INTEGER REFERENCES User (id), jam_id INTEGER REFERENCES Jam (id))",
+            "columns": [
+                {
+                    "name": "user_id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES User (id)"
+                        }
+                    ]
+                },
+                {
+                    "name": "jam_id",
+                    "type": "INTEGER",
+                    "constraints": [
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES Jam (id)"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+            ]
+        }
+    ]
+}
