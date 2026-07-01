@@ -15,9 +15,11 @@
 
 .game-page-primary-column{
     width: 60vw;
+    margin: 0.5rem;
 }
 
 .game-page-web-game{
     width: 100%;
     aspect-ratio: calc(16/9);
+    border: 0.2rem red solid;
 }

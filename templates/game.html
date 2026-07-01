@@ -6,13 +6,13 @@
 <div class="game-page-flex game-page-flex-small">
     <div class="game-page-primary-column">
         {% if game_data.has_html %}
-        <iframe class="game-page-web-game" src="{{game_data.html_file_path}}" frameborder="0"></iframe>
+        <iframe class="game-page-web-game" id="game" src="{{game_data.html_file_path}}" frameborder="0"></iframe>
+        <button id="fullscreen">Fullscreen Game</button>
+        <br>
         {% endif %}
-        {{game_data.description}}
-        <p class="game-description">
-            {{game_data.description}}
-        </p>
+        {# Ensured to be safe with bleach #}
+        {{game_data.description | safe}
     </div>
 </div>
-
+<script src="{{url_for('static', filename='scripts/fullscreen.js')}}"></script>
 {% endblock %}

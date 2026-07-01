@@ -55,6 +55,13 @@ header, footer {
     color: #F5F5F5;
 }
 
+.current-user {
+    padding: 0.5rem 1rem;
+    margin: 0;
+    align-self: middle;
+    color: #BBBBBB;
+}
+
 /* Footer */
 .footer-flex {
     display: flex;
