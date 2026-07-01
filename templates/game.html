@@ -11,7 +11,7 @@
         <br>
         {% endif %}
         {# Ensured to be safe with bleach #}
-        {{game_data.description | safe}
+        {{game_data.description | safe}}
     </div>
 </div>
 <script src="{{url_for('static', filename='scripts/fullscreen.js')}}"></script>
