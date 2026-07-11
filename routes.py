@@ -127,6 +127,11 @@ def game_page(game_id):
 def page_not_found(_error):
     """Render the 404 error page."""
     _error = _error  # Fixes unsued variable errors.
+
+    # Removes layout from errors in iframes.
+    if request.endpoint == "static":
+        return render_template("iframe_404.html")
+
     return render_template("404.html")
 
 
@@ -134,6 +139,11 @@ def page_not_found(_error):
 def internal_server_error(_error):
     """Render the 500 error page."""
     _error = _error  # Fixes unsued variable errors.
+
+    # Removes layout from errors in iframes.
+    if request.endpoint == "static":
+        return render_template("iframe_500.html")
+
     return render_template("500.html")
 
 
