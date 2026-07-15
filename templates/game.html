@@ -3,15 +3,32 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/game.css')}}">
 {% endblock%}
 {% block content %}
-<div class="game-page-flex game-page-flex-small">
+<div class="game-page-flex">
     <div class="game-page-primary-column">
         {% if game_data.has_html %}
-        <iframe class="game-page-web-game" id="game" src="{{game_data.html_file_path}}" frameborder="0"></iframe>
-        <button id="fullscreen">Fullscreen Game</button>
-        <br>
+        <div class="game-container">
+            <iframe class="game-page-web-game" id="game" src="{{url_for('static', filename=game_data.html_file_path)}}" frameborder="0"></iframe>
+            <button id="fullscreen" class="fullscreen_button">
+                <img class="fullscreen_button_image" src="/static/images/fullscreen.png" alt="Fullscreen">
+            </button>
+        </div>
         {% endif %}
+
+        <p class="description-heading"></p>
         {# Ensured to be safe with bleach #}
         {{game_data.description | safe}}
+
+        {% if game_data.has_windows or game_data.has_mac or game_data.has_linux %}
+        <div class="downloads">
+            <p class="download-heading">Downloads</p>
+            {% if game_data.has_windows %}
+            <div class="download">
+                <p class="download-os"><a class="download-button" href="{{url_for('main.download', file_path=game_data.windows_file_path)}}" download>Download</a> Windows Version</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
     </div>
 </div>
 <script src="{{url_for('static', filename='scripts/fullscreen.js')}}"></script>

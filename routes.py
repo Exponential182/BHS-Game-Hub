@@ -1,5 +1,8 @@
 
-from flask import Blueprint, render_template, redirect, url_for, request, abort
+from flask import (
+    Blueprint, render_template, redirect, url_for, request, abort,
+    send_from_directory, current_app
+)
 from flask_login import current_user, login_user, login_required, logout_user
 from sqlalchemy import select
 from argon2.exceptions import VerifyMismatchError
@@ -119,6 +122,13 @@ def game_page(game_id):
     return render_template(
         "game.html",
         game_data=game_info
+    )
+
+
+@main_bp.route("/download/<path:file_path>")
+def download(file_path):
+    return send_from_directory(
+        current_app.config["DOWNLOAD_FOLDER"], file_path
     )
 
 

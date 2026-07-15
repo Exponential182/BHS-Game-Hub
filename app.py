@@ -15,6 +15,9 @@ def create_app():
         ab4cdb98da867b286998c0fcabe0e4cfd58486d007fe9c2b2ce5c39f398713ec
     """
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///game_hub.db"
+    # Requires additional Filtering
+    app.config["DOWNLOAD_FOLDER"] = "static/games/"
+    app.config["UPLOAD_FOLDER"] = "static/games/"
 
     # Instance all imported objects
     db.init_app(app)
