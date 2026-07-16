@@ -1,0 +1,21 @@
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    margin: 0rem 10rem;
+    text-align: center;
+    background-color: #2EDC73;
+}
+
+.landing-heading{
+    font-size: 3rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 2rem 0rem;
+}
+
+.landing-description{
+    margin: 0;
+    font-size: 1.2rem;
+}

@@ -6,7 +6,7 @@ An alternative tool to itch.io for hosting games developed with the posibility o
 #### Normal Setup
  - Clone the repository
  - Create a virtual environment (optional)
- - Install the packages in _requirements.txt_
+ - Install the packages in __requirements.txt__
  - Run __app.py__ from this directory
 
 #### Server Deployment (WIP)
