@@ -13,6 +13,11 @@ def update_arg(key, value):
     """
     args = request.args.copy()
 
+    # Ensures no argument is added mutliple times due to an iterator input
+    if type(value) not in (int, float, bool, str):
+        return url_for(request.endpoint)
+
+
     # Uses None as a clear condition so True/Fa;se can still be used as args.
     if value is None and key in args:
         args.pop(key)
