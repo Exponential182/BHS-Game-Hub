@@ -17,8 +17,7 @@ def update_arg(key, value):
     if type(value) not in (int, float, bool, str):
         return url_for(request.endpoint)
 
-
-    # Uses None as a clear condition so True/Fa;se can still be used as args.
+    # Uses None as a clear condition so True/False can still be used as args.
     if value is None and key in args:
         args.pop(key)
     else:
