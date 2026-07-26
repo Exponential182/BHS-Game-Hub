@@ -7,7 +7,9 @@
         }
     ],
     "[python]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "charliermarsh.ruff"
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "never",
+            "source.organizeImports.ruff": "never".
+        }
   }
 }
