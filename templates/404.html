@@ -11,7 +11,8 @@
     <div class="error-return">
         <a href="{{url_for('main.home')}}">Return to Home Page</a>
         <hr>
-        <a href="javascript:history.back()">Go Back</a>
+        <a id="back-button" href="javascript:void(0)">Go Back</a>
     </div>
 </div>
+<script src="{{url_for('static', filename='scripts/back.js')}}"></script>
 {% endblock %}
