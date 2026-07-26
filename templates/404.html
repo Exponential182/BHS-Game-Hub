@@ -8,7 +8,10 @@
     <br>
     <p class="error-description">It appears you've gotten lost or the url is invalid!</p>
     <br>
-    <div class="error-return"><a href="{{url_for('main.home')}}">Return to Home Page</a>
+    <div class="error-return">
+        <a href="{{url_for('main.home')}}">Return to Home Page</a>
+        <hr>
+        <a href="javascript:history.back()">Go Back</a>
     </div>
 </div>
 {% endblock %}
