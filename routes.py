@@ -129,7 +129,11 @@ def game_page(game_id):
 
 @main_bp.route("/download/<path:file_path>")
 def download(file_path):
-    return send_from_directory(current_app.config["DOWNLOAD_FOLDER"], file_path)
+    return send_from_directory(
+        current_app.config["DOWNLOAD_FOLDER"],
+        file_path,
+        as_attachment=True,
+    )
 
 
 # Redirect errors to specific pages to better handle crashes/bad urls.
@@ -140,7 +144,7 @@ def page_not_found(_error):
 
     # Removes layout from errors in iframes.
     if request.endpoint == "static":
-        return render_template("iframe_404.html")
+        return render_template("static_404.html")
 
     return render_template("404.html")
 
@@ -152,12 +156,6 @@ def internal_server_error(_error):
 
     # Removes layout from errors in iframes.
     if request.endpoint == "static":
-        return render_template("iframe_500.html")
+        return render_template("static_500.html")
 
     return render_template("500.html")
-
-
-@main_bp.route("/force500")
-def force500():
-    """Test route for testing the 500 page."""
-    abort(500)
