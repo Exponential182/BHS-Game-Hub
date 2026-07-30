@@ -103,7 +103,7 @@ def games():
         statement = statement.join(Genre).where(Genre.name == genre_search)
 
     genres = db.session.execute(select(Genre)).scalars()
-    game_info = db.session.execute(statement).scalars()
+    game_info = db.session.execute(statement).scalars().all()
     return render_template(
         "games.html",
         game_data=game_info,

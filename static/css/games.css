@@ -1,10 +1,13 @@
 .games {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
     background-color: #F5F5F5;
     padding: 1rem;
     width: 100%;
+}
+
+.games-grid {
+    display: grid;
     gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .game-box {
@@ -130,4 +133,12 @@
     padding: 0.5rem;
     border-radius: 0.6rem;
     text-decoration: none;
+}
+
+.games-not-present {
+    text-align: center;
+    width: 100%;
+    margin: 2rem 0rem;
+    font-weight: 600;
+    font-size: 2rem;
 }
