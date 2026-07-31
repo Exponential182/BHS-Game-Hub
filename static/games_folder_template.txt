@@ -1,0 +1,21 @@
+games/
+└── game_id/
+    ├── game_files/
+    │   ├── windows/
+    │   │   └── game_file.zip
+    │   │
+    │   ├── mac/
+    │   │   └── game_file.zip / exe?
+    │   │
+    │   ├── linux/
+    │   │   └── game_file.tar.gz (or something)
+    │   │
+    │   └── web/
+    │       ├── index.html
+    │       └── other assorted web export files
+    │
+    ├── display_images/
+    │   ├── img_1.png
+    │   └── ... other images
+    │
+    └── cover_image.png 

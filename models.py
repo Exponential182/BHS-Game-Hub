@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, ForeignKey
 from flask_login import UserMixin
+from sqlalchemy import ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from extensions import Base
 
@@ -11,6 +11,7 @@ class Game(Base):
     """A Registered Game in the database.
     Links to associated Users and Jams.
     """
+
     __tablename__ = "Game"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
@@ -48,6 +49,7 @@ class User(Base, UserMixin):
     """A Registered User in the database.
     Links to associated Games and Jams
     """
+
     __tablename__ = "User"
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column()
@@ -61,8 +63,7 @@ class User(Base, UserMixin):
         back_populates="users",
     )
     jams: Mapped[list["Jam"]] = relationship(
-        secondary="UserJam",
-        back_populates="users"
+        secondary="UserJam", back_populates="users"
     )
 
 
@@ -70,6 +71,7 @@ class Jam(Base):
     """A Registered Jam in the database.
     Links to associated Users and Games
     """
+
     __tablename__ = "Jam"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
@@ -90,6 +92,7 @@ class Jam(Base):
 
 class Genre(Base):
     """Describes the genre of a game."""
+
     __tablename__ = "Genre"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
@@ -99,6 +102,7 @@ class Genre(Base):
 # Linking tables
 class UserJam(Base):
     """Association table for Users and Jams."""
+
     __tablename__ = "UserJam"
     user_id: Mapped[int] = mapped_column(
         ForeignKey("User.id"),
@@ -112,6 +116,7 @@ class UserJam(Base):
 
 class UserGame(Base):
     """Association table for Users and Games."""
+
     __tablename__ = "UserGame"
     user_id: Mapped[int] = mapped_column(
         ForeignKey("User.id"),
@@ -125,6 +130,7 @@ class UserGame(Base):
 
 class JamGame(Base):
     """Association table for Games and Jams."""
+
     __tablename__ = "JamGame"
     game_id: Mapped[int] = mapped_column(
         ForeignKey("Game.id"),

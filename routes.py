@@ -1,16 +1,21 @@
-
-from flask import (
-    Blueprint, render_template, redirect, url_for, request, abort,
-    send_from_directory, current_app
-)
-from flask_login import current_user, login_user, login_required, logout_user
-from sqlalchemy import select
 from argon2.exceptions import VerifyMismatchError
+from flask import (
+    Blueprint,
+    abort,
+    current_app,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
+from flask_login import current_user, login_required, login_user, logout_user
+from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
 
-from models import Game, Jam, User, Genre
+from extensions import db, hasher, login_manager
 from forms import LoginForm, SignupForm
-from extensions import hasher, db, login_manager
+from models import Game, Genre, Jam, User
 
 main_bp = Blueprint("main", __name__)
 auth_bp = Blueprint("auth", __name__)
@@ -19,7 +24,7 @@ auth_bp = Blueprint("auth", __name__)
 # Flask-login's internal user loader (deprecated for lookups by current_user)
 @login_manager.user_loader
 def load_user(user_id):
-    """ Loads a users data by id, returns a User Object """
+    """Loads a users data by id, returns a User Object"""
     statement = select(User).limit(1).where(User.id == int(user_id))
     data = db.session.execute(statement)
     data = data.scalar()
@@ -119,16 +124,15 @@ def game_page(game_id):
     game_info = db.session.execute(game_stmt).scalar_one_or_none()
     if game_info is None:
         abort(404)
-    return render_template(
-        "game.html",
-        game_data=game_info
-    )
+    return render_template("game.html", game_data=game_info)
 
 
 @main_bp.route("/download/<path:file_path>")
 def download(file_path):
     return send_from_directory(
-        current_app.config["DOWNLOAD_FOLDER"], file_path
+        current_app.config["DOWNLOAD_FOLDER"],
+        file_path,
+        as_attachment=True,
     )
 
 
@@ -136,11 +140,11 @@ def download(file_path):
 @main_bp.app_errorhandler(404)
 def page_not_found(_error):
     """Render the 404 error page."""
-    _error = _error  # Fixes unsued variable errors.
+    _error = _error  # Fixes unsued variable errors.  # noqa: PLW0127
 
     # Removes layout from errors in iframes.
     if request.endpoint == "static":
-        return render_template("iframe_404.html")
+        return render_template("static_404.html")
 
     return render_template("404.html")
 
@@ -148,16 +152,10 @@ def page_not_found(_error):
 @main_bp.app_errorhandler(500)
 def internal_server_error(_error):
     """Render the 500 error page."""
-    _error = _error  # Fixes unsued variable errors.
+    _error = _error  # Fixes unsued variable errors.  # noqa: PLW0127
 
     # Removes layout from errors in iframes.
     if request.endpoint == "static":
-        return render_template("iframe_500.html")
+        return render_template("static_500.html")
 
     return render_template("500.html")
-
-
-@main_bp.route("/force500")
-def force500():
-    """Test route for testing the 500 page."""
-    abort(500)

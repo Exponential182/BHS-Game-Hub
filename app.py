@@ -1,13 +1,13 @@
 from flask import Flask
 
 # Pulls in all of the required functions/objects
-from extensions import db, login_manager
-from routes import main_bp, auth_bp
 from context_processors import utilities
+from extensions import db, login_manager
+from routes import auth_bp, main_bp
 
 
 def create_app():
-    """ Instance the app and establishes all conenctions."""
+    """Instance the app and establishes all conenctions."""
     app = Flask(__name__)
 
     # Insecure key, to be replaced before deployment.
