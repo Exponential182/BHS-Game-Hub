@@ -1,6 +1,18 @@
 {% extends "layout.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/auth.css')}}">
+{% endblock %}
 {% block content %}
 <form class="account-form-container" method="POST">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="form-error">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     {{ form.hidden_tag() }}
     {{ form.username(
         class_="w3-input username-input",
@@ -16,6 +28,7 @@
             class_="body",
         ) }}
     </div>
+    <a class="login-signup-link" href="{{url_for('auth.signup')}}">Don't have an account? Sign up here!</a>
     {{ form.submit(
         class_="w3-btn w3-teal",
     ) }}

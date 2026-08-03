@@ -3,6 +3,7 @@ from flask import (
     Blueprint,
     abort,
     current_app,
+    flash,
     redirect,
     render_template,
     request,
@@ -57,7 +58,7 @@ def login():
                 login_user(user_info, remember=login_form.remember.data)
                 return redirect(url_for("main.home"))
         except VerifyMismatchError:
-            pass  # Error Message for failing (TO BE IMPLEMENTED)
+            flash("Incorrect Username or Password")
     return render_template("login.html", form=login_form)
 
 
@@ -86,8 +87,7 @@ def signup():
             db.session.commit()
             return redirect(url_for("auth.login"))
         else:
-            # send error message about invalid password
-            pass
+            flash("The passwords didn't match.")
     return render_template("signup.html", form=signup_form)
 
 

@@ -72,38 +72,6 @@ header, footer {
     background-color: #106030;
 }
 
-/* Login/Signup Pages */
-.account-form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #F5F5F5;
-    width: 30%;
-    margin: 2rem auto;
-    padding: 2rem;
-    gap: 2rem;
-    box-shadow: 0rem 0rem 0.5rem 0.1rem #BBBBBB;
-}
-
-.username-input {
-    max-width: 100%;
-    border: #BBBBBB solid 1.5px;
-}
-
-.password-input {
-    max-width: 100%;
-    border: #BBBBBB solid 1.5px;
-}
-
-.modern-checkbox {
-    border-radius: 100%;
-}
-
-.email-input {
-    max-width: 100%;
-    border: #BBBBBB solid 1.5px;
-}
-
 /* Collections Pages (Games or Jams) */
 .collection-flex {
     display: flex;

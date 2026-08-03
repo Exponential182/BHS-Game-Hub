@@ -17,7 +17,11 @@ class LoginForm(FlaskForm):
         render_kw={"placeholder": "Username"},
         validators=[
             DataRequired(),
-            Length(min=4, max=32),
+            Length(
+                min=4,
+                max=32,
+                message="Usernames must be between 4 and 32 characters"
+            ),
         ],
     )
     password = PasswordField(
@@ -25,7 +29,11 @@ class LoginForm(FlaskForm):
         render_kw={"placeholder": "Password"},
         validators=[
             DataRequired(),
-            Length(min=8, max=64),
+            Length(
+                min=8,
+                max=64,
+                message="Passwords must be between 8 and 64 characters."
+            ),
         ],
     )
     remember = BooleanField("Remember Me?")
