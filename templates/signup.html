@@ -27,6 +27,14 @@
     {{ form.repeat_password(
         class_="w3-input password-input",
     ) }}
+    <div>
+        {{ form.remember(
+            class_="w3-check",
+        ) }}
+        {{ form.remember.label(
+            class_="body",
+        ) }}
+    </div>
     <a class="login-signup-link" href="{{url_for('auth.login')}}">Already have an account? Login here!</a>
     {{ form.submit(
         class_="w3-btn w3-teal",

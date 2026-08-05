@@ -69,4 +69,5 @@ class SignupForm(FlaskForm):
             Length(min=8, max=64),
         ],
     )
+    remember = BooleanField("Remember Me?")
     submit = SubmitField("Submit")

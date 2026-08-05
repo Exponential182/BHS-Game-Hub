@@ -85,7 +85,8 @@ def signup():
             )
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for("auth.login"))
+            login_user(new_user, remember=signup_form.remember)
+            return redirect(url_for("main.home"))
         else:
             flash("The passwords didn't match.")
     return render_template("signup.html", form=signup_form)
