@@ -8,7 +8,7 @@
         {% if messages %}
             {% for message in messages %}
                 <div class="form-error">
-                    {{ message }}
+                    {{ message|safe }}
                 </div>
             {% endfor %}
         {% endif %}
@@ -17,9 +17,17 @@
     {{ form.username(
         class_="w3-input username-input",
     ) }}
+    <div>
     {{ form.password(
         class_="w3-input password-input",
-    ) }}
+        )
+    }}
+    {% if form.password.errors %}
+        {% for error in form.password.errors %}
+            {{ error }}
+        {% endfor %}
+    {% endif %}
+    </div>
     <div>
         {{ form.remember(
             class_="w3-check",
@@ -30,7 +38,7 @@
     </div>
     <a class="login-signup-link" href="{{url_for('auth.signup')}}">Don't have an account? Sign up here!</a>
     {{ form.submit(
-        class_="w3-btn w3-teal",
+        class_="w3-btn w3-teal submit-btn",
     ) }}
 </form>
 {% endblock %}

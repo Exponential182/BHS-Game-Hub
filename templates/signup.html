@@ -8,7 +8,7 @@
         {% if messages %}
             {% for message in messages %}
                 <div class="form-error">
-                    {{ message }}
+                    {{ message|safe }}
                 </div>
             {% endfor %}
         {% endif %}
