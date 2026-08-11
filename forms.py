@@ -6,7 +6,7 @@ from wtforms import (
     StringField,
     SubmitField,
 )
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, EqualTo, Length
 
 
 class LoginForm(FlaskForm):
@@ -20,7 +20,7 @@ class LoginForm(FlaskForm):
             Length(
                 min=4,
                 max=32,
-                message="Usernames must be between 4 and 32 characters"
+                message="Usernames must be between 4 and 32 characters",
             ),
         ],
     )
@@ -32,7 +32,7 @@ class LoginForm(FlaskForm):
             Length(
                 min=8,
                 max=64,
-                message="Passwords must be between 8 and 64 characters."
+                message="Passwords must be between 8 and 64 characters.",
             ),
         ],
     )
@@ -48,25 +48,51 @@ class SignupForm(FlaskForm):
         render_kw={"placeholder": "Email"},
         validators=[
             DataRequired(),
-            Length(min=1, max=320),
+            Length(
+                min=1,
+                max=320,
+                message="Invalid Email Address"
+            ),
         ],
     )
     username = StringField(
         "Username",
         render_kw={"placeholder": "Username"},
-        validators=[DataRequired(), Length(min=4, max=32)],
+        validators=[
+            DataRequired(),
+            Length(
+                min=4,
+                max=32,
+                message="Usernames must be between 4 and 32 characters",
+            ),
+        ],
     )
     password = PasswordField(
         "Password",
         render_kw={"placeholder": "Password"},
-        validators=[DataRequired(), Length(min=8, max=64)],
+        validators=[
+            DataRequired(),
+            Length(
+                min=8,
+                max=64,
+                message="Passwords must be between 8 and 64 characters.",
+            ),
+        ],
     )
     repeat_password = PasswordField(
         "Repeat Password",
         render_kw={"placeholder": "Confirm Password"},
         validators=[
             DataRequired(),
-            Length(min=8, max=64),
+            Length(
+                min=8,
+                max=64,
+                message="Passwords must be between 8 and 64 characters.",
+            ),
+            EqualTo(
+                "password",
+                message="Passwords do not match."
+            )
         ],
     )
     remember = BooleanField("Remember Me?")

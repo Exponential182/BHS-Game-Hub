@@ -18,15 +18,39 @@
         class_="w3-input email-input",
         type_="email",
     ) }}
-    {{ form.username(
-        class_="w3-input username-input",
-    ) }}
-    {{ form.password(
-        class_="w3-input password-input",
-    ) }}
-    {{ form.repeat_password(
-        class_="w3-input password-input",
-    ) }}
+    <div class="text-field-container">
+        {{ form.username(
+            class_="w3-input",
+        ) }}
+        {% if form.username.errors %}
+            {% for error in form.username.errors %}
+                <p class="error-message"> {{error}} </p>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="text-field-container">
+        {{ form.password(
+            class_="w3-input",
+            id_="password"
+        ) }}
+        {% if form.password.errors %}
+            {% for error in form.password.errors %}
+                <p class="error-message"> {{error}} </p>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="text-field-container">
+        {{ form.repeat_password(
+            class_="w3-input",
+            id_="password_repeat"
+        ) }}
+        <p id="password-mismatch-error" class="error-message match-error">The passwords do not match.</p>
+        {% if form.repeat_password.errors %}
+            {% for error in form.repeat_password.errors %}
+                <p class="error-message"> {{error}} </p>
+            {% endfor %}
+        {% endif %}
+    </div>
     <div>
         {{ form.remember(
             class_="w3-check",
@@ -40,4 +64,5 @@
         class_="w3-btn w3-teal",
     ) }}
 </form>
+<script src="{{url_for('static', filename='scripts/password_match.js')}}" defer></script>
 {% endblock %}

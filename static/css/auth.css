@@ -10,27 +10,13 @@
     box-shadow: 0rem 0rem 0.5rem 0.1rem #BBBBBB;
 }
 
+/* All the text fields */
 input:not([type="submit"]) {
     border: #BBBBBB solid 2px;
 }
 
-.username-input {
-    max-width: 100%;
-    border: #BBBBBB solid 1.5px;
-}
-
-.password-input {
-    max-width: 100%;
-    border: #BBBBBB solid 1.5px;
-}
-
 .modern-checkbox {
     border-radius: 100%;
-}
-
-.email-input {
-    max-width: 100%;
-    border: #BBBBBB solid 1.5px;
 }
 
 .form-error {
@@ -39,11 +25,25 @@ input:not([type="submit"]) {
     border: red solid 0.2rem;
     text-align: center;
     padding: 1rem;
+    width: -webkit-fill-available;
+    width: stretch;
 }
 
 .login-signup-link{
     font-size: 1.2rem;
     color: #1a0bad;
+}
+
+.text-field-container {
+    width: -webkit-fill-available;
+    width: stretch
+}
+
+.error-message {
+    font-size: 0.9rem;
+    color: red;
+    margin: 0.1rem;
+    padding-left: 0.2rem;
 }
 
 /* Validation Nonsesne */
@@ -63,4 +63,12 @@ input:user-invalid {
 
 input:user-valid {
     border-color: #28A745;
+}
+
+.match-error {
+    display: none;
+}
+
+.error-msg {
+
 }

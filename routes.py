@@ -53,7 +53,7 @@ def login():
             user_info: User = user_info[0]
         except NoResultFound:
             flash("Incorrect Username or Password. <br> The account may not exist.")
-            return render_template("login.html", form=login_form)
+            return redirect(url_for("auth.login"))
         try:
             if hasher.verify(user_info.password_hash, password):
                 login_user(user_info, remember=login_form.remember.data)

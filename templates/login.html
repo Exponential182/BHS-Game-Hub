@@ -14,19 +14,25 @@
         {% endif %}
     {% endwith %}
     {{ form.hidden_tag() }}
-    {{ form.username(
-        class_="w3-input username-input",
-    ) }}
-    <div>
-    {{ form.password(
-        class_="w3-input password-input",
-        )
-    }}
-    {% if form.password.errors %}
-        {% for error in form.password.errors %}
-            {{ error }}
-        {% endfor %}
-    {% endif %}
+    <div class="text-field-container">
+        {{ form.username(
+        class_="w3-input",
+        ) }}
+        {% if form.username.errors %}
+            {% for error in form.username.errors %}
+                <p class="error-message"> {{error}} </p>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="text-field-container">
+        {{ form.password(
+            class_="w3-input password-input",
+        ) }}
+        {% if form.password.errors %}
+            {% for error in form.password.errors %}
+                <p class="error-message"> {{error}} </p>
+            {% endfor %}
+        {% endif %}
     </div>
     <div>
         {{ form.remember(
