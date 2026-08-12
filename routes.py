@@ -16,7 +16,7 @@ from sqlalchemy.exc import NoResultFound
 
 from extensions import db, hasher, login_manager
 from forms import LoginForm, SignupForm
-from models import Game, Genre, Jam, User
+from models import Game, Genre, User
 
 main_bp = Blueprint("main", __name__)
 auth_bp = Blueprint("auth", __name__)

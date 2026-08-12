@@ -1,7 +1,5 @@
-from datetime import datetime
-
 from flask_login import UserMixin
-from sqlalchemy import ForeignKey, String
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from extensions import Base
@@ -39,15 +37,11 @@ class Game(Base):
         secondary="UserGame",
         back_populates="games",
     )
-    jams: Mapped[list["Jam"]] = relationship(
-        secondary="JamGame",
-        back_populates="games",
-    )
 
 
 class User(Base, UserMixin):
     """A Registered User in the database.
-    Links to associated Games and Jams
+    Links to associated Games
     """
 
     __tablename__ = "User"
@@ -62,32 +56,6 @@ class User(Base, UserMixin):
         secondary="UserGame",
         back_populates="users",
     )
-    jams: Mapped[list["Jam"]] = relationship(
-        secondary="UserJam", back_populates="users"
-    )
-
-
-class Jam(Base):
-    """A Registered Jam in the database.
-    Links to associated Users and Games
-    """
-
-    __tablename__ = "Jam"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column()
-    description: Mapped[str] = mapped_column()
-    start_time: Mapped[datetime] = mapped_column(String)
-    end_time: Mapped[datetime] = mapped_column(String)
-
-    # Many to Many Links
-    users: Mapped[list["User"]] = relationship(
-        secondary="UserJam",
-        back_populates="jams",
-    )
-    games: Mapped[list["Game"]] = relationship(
-        secondary="JamGame",
-        back_populates="jams",
-    )
 
 
 class Genre(Base):
@@ -97,21 +65,6 @@ class Genre(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
     games: Mapped[list["Game"]] = relationship(back_populates="genre")
-
-
-# Linking tables
-class UserJam(Base):
-    """Association table for Users and Jams."""
-
-    __tablename__ = "UserJam"
-    user_id: Mapped[int] = mapped_column(
-        ForeignKey("User.id"),
-        primary_key=True,
-    )
-    jam_id: Mapped[int] = mapped_column(
-        ForeignKey("Jam.id"),
-        primary_key=True,
-    )
 
 
 class UserGame(Base):
@@ -124,19 +77,5 @@ class UserGame(Base):
     )
     game_id: Mapped[int] = mapped_column(
         ForeignKey("Game.id"),
-        primary_key=True,
-    )
-
-
-class JamGame(Base):
-    """Association table for Games and Jams."""
-
-    __tablename__ = "JamGame"
-    game_id: Mapped[int] = mapped_column(
-        ForeignKey("Game.id"),
-        primary_key=True,
-    )
-    jam_id: Mapped[int] = mapped_column(
-        ForeignKey("Jam.id"),
         primary_key=True,
     )
