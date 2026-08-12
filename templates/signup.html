@@ -20,6 +20,11 @@
             class_="w3-input email-input",
             type_="email",
         ) }}
+        {% if form.email.errors %}
+            {% for error in form.email.errors %}
+                <p class="error-message"> {{error}} </p>
+            {% endfor %}
+        {% endif %}
     </div>
     <div class="text-field-container">
         {{ form.username.label }}
@@ -70,5 +75,6 @@
         class_="w3-btn w3-teal",
     ) }}
 </form>
+<script src="{{url_for('static', filename='scripts/auth_error_clear.js')}}" defer></script>
 <script src="{{url_for('static', filename='scripts/password_match.js')}}" defer></script>
 {% endblock %}

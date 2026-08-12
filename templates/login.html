@@ -17,7 +17,7 @@
     <div class="text-field-container">
         {{ form.username.label }}
         {{ form.username(
-        class_="w3-input",
+            class_="w3-input",
         ) }}
         {% if form.username.errors %}
             {% for error in form.username.errors %}
@@ -28,7 +28,7 @@
     <div class="text-field-container">
         {{ form.password.label }}
         {{ form.password(
-            class_="w3-input password-input",
+            class_="w3-input",
         ) }}
         {% if form.password.errors %}
             {% for error in form.password.errors %}
@@ -49,4 +49,5 @@
         class_="w3-btn w3-teal submit-btn",
     ) }}
 </form>
+<script src="{{url_for('static', filename='scripts/auth_error_clear.js')}}" defer></script>
 {% endblock %}
