@@ -14,11 +14,15 @@
         {% endif %}
     {% endwith %}
     {{ form.hidden_tag() }}
-    {{ form.email(
-        class_="w3-input email-input",
-        type_="email",
-    ) }}
     <div class="text-field-container">
+        {{ form.email.label }}
+        {{ form.email(
+            class_="w3-input email-input",
+            type_="email",
+        ) }}
+    </div>
+    <div class="text-field-container">
+        {{ form.username.label }}
         {{ form.username(
             class_="w3-input",
         ) }}
@@ -29,6 +33,7 @@
         {% endif %}
     </div>
     <div class="text-field-container">
+        {{ form.password.label }}
         {{ form.password(
             class_="w3-input",
             id_="password"
@@ -40,6 +45,7 @@
         {% endif %}
     </div>
     <div class="text-field-container">
+        {{ form.repeat_password.label }}
         {{ form.repeat_password(
             class_="w3-input",
             id_="password_repeat"

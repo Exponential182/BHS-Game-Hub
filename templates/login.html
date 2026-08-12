@@ -15,6 +15,7 @@
     {% endwith %}
     {{ form.hidden_tag() }}
     <div class="text-field-container">
+        {{ form.username.label }}
         {{ form.username(
         class_="w3-input",
         ) }}
@@ -25,6 +26,7 @@
         {% endif %}
     </div>
     <div class="text-field-container">
+        {{ form.password.label }}
         {{ form.password(
             class_="w3-input password-input",
         ) }}

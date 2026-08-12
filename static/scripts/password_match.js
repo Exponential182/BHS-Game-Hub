@@ -9,11 +9,14 @@ function update_mismatch() {
     let valid_confirmed_password = confirm_password.checkValidity();
     if (!matching && valid_password && valid_confirmed_password) {
         error_message.style.display = "inherit";
+        password.classList.add("invalid");
+        confirm_password.classList.add("invalid");
     } else {
         error_message.style.display = "none";
+        password.classList.remove("invalid");
+        confirm_password.classList.remove("invalid");
     }
 };
-
 
 password.addEventListener("blur", (event) => {
     update_mismatch();

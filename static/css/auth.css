@@ -6,7 +6,7 @@
     width: 30%;
     margin: 2rem auto;
     padding: 2rem;
-    gap: 2rem;
+    gap: 1.5rem;
     box-shadow: 0rem 0rem 0.5rem 0.1rem #BBBBBB;
 }
 
@@ -51,24 +51,23 @@ input[type="submit"] {
     cursor: pointer;
 }
 
-
 form:has(:invalid) input[type="submit"] {
     opacity: 0.5;
     pointer-events: none;
-}
-
-input:user-invalid {
-    border-color: #DC3545;
 }
 
 input:user-valid {
     border-color: #28A745;
 }
 
-.match-error {
-    display: none;
+input:user-invalid {
+    border-color: #DC3545;
 }
 
-.error-msg {
+.invalid {
+    border-color: #DC3545 !important; 
+}
 
+.match-error {
+    display: none;
 }
