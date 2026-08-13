@@ -5,6 +5,9 @@ from wtforms import (
     PasswordField,
     StringField,
     SubmitField,
+    SelectField,
+    FileField,
+    MultipleFileField,
 )
 from wtforms.validators import DataRequired, EqualTo, Length
 
@@ -97,3 +100,19 @@ class SignupForm(FlaskForm):
     )
     remember = BooleanField("Remember Me?")
     submit = SubmitField("Submit")
+
+
+class GameEditForm(FlaskForm):
+    """Game Upload and Configuration Form"""
+    # Name, tagline, description, genre, visibility, dev_state, cover_image, images
+    # Maybes: tags, genre multiselect
+
+    name = StringField()
+    tagline = StringField()
+    description = StringField() # FIGURE OUT QUILL,js INTEGRATOIN
+    genre = StringField()
+    visibility = SelectField()
+    dev_state = SelectField()
+    cover_image = FileField()
+    images = MultipleFileField()
+    game_uploads = MultipleFileField()

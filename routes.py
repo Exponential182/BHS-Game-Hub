@@ -15,7 +15,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
 
 from extensions import db, hasher, login_manager
-from forms import LoginForm, SignupForm
+from forms import GameEditForm, LoginForm, SignupForm
 from models import Game, Genre, User
 
 main_bp = Blueprint("main", __name__)
@@ -122,6 +122,42 @@ def game_page(game_id):
     if game_info is None:
         abort(404)
     return render_template("game.html", game_data=game_info)
+
+
+@login_required
+@main_bp.route("/game/edit/<int:game_id>")
+def edit_game(game_id):
+    game_edit_form = GameEditForm()
+    game_exists = True
+
+    # New game check
+    if game_id == -1:
+        game_exists = False
+
+    # Invalid game id check
+    existing_game_stmt = select(Game).where(Game.id == game_id)
+    try:
+        db.session.execute(existing_game_stmt).one()
+    except NoResultFound:
+        game_exists = False
+
+
+    if game_exists:
+        # Check identity then
+        # Popualte form with existing data
+        pass
+    else:
+        # Assign new project to current indentity
+        # Create new form
+        pass
+
+    return render_template("game_form.html", form=game_edit_form)
+
+
+
+@main_bp.route("/newgame")
+def new_game():
+    return redirect(url_for('main.edit_game', game_id=-1))
 
 
 @main_bp.route("/download/<path:file_path>")
