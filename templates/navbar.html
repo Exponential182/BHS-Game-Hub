@@ -1,10 +1,8 @@
 <nav class="navbar-flex title">
-    <a href="/" class="navbar-link">Home</a>
-    <a href="/games" class="navbar-link">Games</a>
-    <a href="/jams" class="navbar-link">Game Jams</a>
+    <a href="{{url_for('main.games')}}" class="navbar-link">Home</a>
     
     {% if current_user.is_authenticated %}
-        <a href="/logout" class="navbar-link flex-align-right">Logout</a>
+        <a href="{{url_for('auth.logout')}}" class="navbar-link flex-align-right">Logout</a>
         <p class="current-user">
             {{current_user.username}}
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">

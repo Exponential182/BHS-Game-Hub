@@ -34,12 +34,6 @@ def load_user(user_id):
     return data
 
 
-@main_bp.route("/")
-def home():
-    """Render the home page."""
-    return render_template("home.html")
-
-
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     """Render the login page and validate login credentials."""
@@ -76,7 +70,8 @@ def signup():
             statement = select(User).where(User.email == email)
             user_info = db.session.execute(statement.limit(1)).first()
             if user_info:
-                return redirect(url_for("auth.login"))  # Add error message?
+                flash("An account already exists with that email.")
+                return redirect(url_for("auth.login"))
 
             new_user = User(
                 email=email,
@@ -87,7 +82,7 @@ def signup():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=signup_form.remember)
-            return redirect(url_for("main.home"))
+            return redirect(url_for("main.games"))
         else:
             flash("The passwords didn't match.")
     return render_template("signup.html", form=signup_form)
@@ -100,7 +95,7 @@ def logout():
     return redirect(url_for("main.home"))
 
 
-@main_bp.route("/games")
+@main_bp.route("/")
 def games():
     """Render the game catelouge page."""
     statement = select(Game)
@@ -161,3 +156,8 @@ def internal_server_error(_error):
         return render_template("static_500.html")
 
     return render_template("500.html")
+
+
+@main_bp.route("/quilltest")
+def quill():
+    return render_template("quill.html")
