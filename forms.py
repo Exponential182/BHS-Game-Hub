@@ -2,12 +2,12 @@ from flask_wtf import FlaskForm
 from wtforms import (
     BooleanField,
     EmailField,
-    PasswordField,
-    StringField,
-    SubmitField,
-    SelectField,
     FileField,
     MultipleFileField,
+    PasswordField,
+    RadioField,
+    StringField,
+    SubmitField,
 )
 from wtforms.validators import DataRequired, EqualTo, Length
 
@@ -107,12 +107,28 @@ class GameEditForm(FlaskForm):
     # Name, tagline, description, genre, visibility, dev_state, cover_image, images
     # Maybes: tags, genre multiselect
 
-    name = StringField()
-    tagline = StringField()
-    description = StringField() # FIGURE OUT QUILL,js INTEGRATOIN
+    name = StringField(
+        validators=[
+            DataRequired(),
+            Length(min=1, max=100),
+        ]
+    )
+    tagline = StringField(
+        validators=[
+            Length(min=1, max=50),
+        ]
+    )
+    description = StringField()  # FIGURE OUT QUILL,js INTEGRATOIN
     genre = StringField()
-    visibility = SelectField()
-    dev_state = SelectField()
+    visibility = RadioField(
+        DataRequired(),
+        choices=["Visible", "Private"],
+    )
+    dev_state = RadioField(
+        DataRequired(),
+        choices=["Complete", "Beta", "Prototype"],
+    )
     cover_image = FileField()
     images = MultipleFileField()
     game_uploads = MultipleFileField()
+    save = SubmitField()

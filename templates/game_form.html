@@ -1,10 +1,14 @@
 {% extends "layout.html" %}
+{% block style %}
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+{% endblock %}
 {% block content %}
 
 <div>
     {{form.name()}}
     {{form.tagline()}}
-    {{form.description()}}
+    {{form.description(id_="quill-editor")}}
     {{form.genre()}}
     {{form.visibility()}}
     {{form.dev_state()}}
@@ -15,5 +19,5 @@
 
 
 
-
+<script src="{{url_for('static', filename='scripts/game_description.js')}}" defer></script>
 {% endblock %}
