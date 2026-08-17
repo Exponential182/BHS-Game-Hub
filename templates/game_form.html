@@ -2,22 +2,55 @@
 {% block style %}
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+<link rel="stylesheet" href="{{url_for('static', filename='css/game_form.css')}}">
 {% endblock %}
+
+{% macro text_field(form_row, field_class="") %}
+    <div class="form-field">
+        {{form_row.label(
+            class_="field-title"
+        )}}
+        <p class="field-description">
+            {{form_row.description}}
+        </p>
+        {{form_row(
+            class_="w3-input " + field_class,
+        )}}
+        {% if form_row.errors %}
+            {% for error in form_row.errors %}
+                <p class="error-message"> {{error}} </p>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
 {% block content %}
 
-<div>
-    {{form.name()}}
-    {{form.tagline()}}
-    {{form.description(id_="quill-editor")}}
-    {{form.genre()}}
-    {{form.visibility()}}
-    {{form.dev_state()}}
-    {{form.cover_image()}}
-    {{form.images()}}
-    {{form.game_uploads()}}
+<div class="form-container">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-grid">
+            <div class="form-column data">
+                {{ text_field(form.name) }}
+                {{ text_field(form.tagline) }}
+                {{ text_field(form.description) }}
+                {{ text_field(form.genre, "genre-display") }}
+                {{form.visibility()}}
+                {{form.dev_state()}}
+                {{form.game_uploads()}}
+            </div>
+            <div class="form-column display-images">
+                {{form.cover_image()}}
+                {{form.images()}}
+            </div>
+        </div>
+        {{ form.save(
+            class_="w3-btn w3-teal",
+        ) }}
+    </form>
 </div>
 
 
 
-<script src="{{url_for('static', filename='scripts/game_description.js')}}" defer></script>
+<!-- <script src="{{url_for('static', filename='scripts/game_description.js')}}" defer></script> -->
 {% endblock %}

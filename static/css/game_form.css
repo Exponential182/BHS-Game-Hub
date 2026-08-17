@@ -1,0 +1,65 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    margin: 0 auto;
+    width: 60%;
+}
+
+form {
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 2rem;
+    margin: 1rem;
+    width: 100%;
+}
+
+input[type="text"] {
+    border: 2px #BBBBBB solid;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.field-title {
+    font-weight: 600;
+    color: #222222;
+}
+
+.field-description {
+    color: #444444;
+    margin: 0;
+}
+
+/* Genre Dropdown */
+.genre-display {
+    background-color: #F5F5F5;
+    border: 2px solid #BBBBBB;
+}
+
+ul li {
+    list-style: none;
+}
+
+input:user-invalid {
+    border-color: red;
+}
+
+.error-message {
+    font-size: 0.9rem;
+    color: red;
+    margin: 0.1rem 0rem;
+}

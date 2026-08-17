@@ -51,7 +51,7 @@ def login():
         try:
             if hasher.verify(user_info.password_hash, password):
                 login_user(user_info, remember=login_form.remember.data)
-                return redirect(url_for("main.home"))
+                return redirect(url_for("main.gamess"))
         except VerifyMismatchError:
             flash("Incorrect Username or Password")
     return render_template("login.html", form=login_form)
@@ -124,11 +124,22 @@ def game_page(game_id):
     return render_template("game.html", game_data=game_info)
 
 
+@main_bp.route("/game/edit/<int(signed=True):game_id>", methods=["GET", "POST"])
 @login_required
-@main_bp.route("/game/edit/<int:game_id>")
 def edit_game(game_id):
     game_edit_form = GameEditForm()
     game_exists = True
+
+    # Populate Genres for display and validation
+    genres = list(db.session.execute(select(Genre.name)).all())
+    genres = [row[0] for row in genres]  # Fix Format
+    game_edit_form.genre.choices = genres
+
+    if game_edit_form.validate_on_submit():
+        print("worked")
+        return redirect(url_for("main.games"))
+    else:
+        print("validate failed")
 
     # New game check
     if game_id == -1:
@@ -141,7 +152,6 @@ def edit_game(game_id):
     except NoResultFound:
         game_exists = False
 
-
     if game_exists:
         # Check identity then
         # Popualte form with existing data
@@ -152,7 +162,6 @@ def edit_game(game_id):
         pass
 
     return render_template("game_form.html", form=game_edit_form)
-
 
 
 @main_bp.route("/newgame")

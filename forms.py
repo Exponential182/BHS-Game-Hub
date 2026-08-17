@@ -6,6 +6,7 @@ from wtforms import (
     MultipleFileField,
     PasswordField,
     RadioField,
+    SelectField,
     StringField,
     SubmitField,
 )
@@ -108,18 +109,28 @@ class GameEditForm(FlaskForm):
     # Maybes: tags, genre multiselect
 
     name = StringField(
+        label="Title",
         validators=[
-            DataRequired(),
-            Length(min=1, max=100),
-        ]
+            DataRequired(
+                message="This field is requried"
+            ),
+            Length(
+                min=1,
+                max=100,
+                message="Game titles must be between 1 and 100 characters",
+            ),
+        ],
     )
     tagline = StringField(
+        description="A brief summary of your game for use on the home page.",
         validators=[
             Length(min=1, max=50),
         ]
     )
     description = StringField()  # FIGURE OUT QUILL,js INTEGRATOIN
-    genre = StringField()
+    genre = SelectField(
+        choices=["No Genres Available"]
+    )
     visibility = RadioField(
         DataRequired(),
         choices=["Visible", "Private"],
@@ -131,4 +142,4 @@ class GameEditForm(FlaskForm):
     cover_image = FileField()
     images = MultipleFileField()
     game_uploads = MultipleFileField()
-    save = SubmitField()
+    save = SubmitField("Save")
