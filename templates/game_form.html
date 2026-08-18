@@ -27,16 +27,47 @@
 {% block content %}
 
 <div class="form-container">
-    <form method="POST">
+    <form method="POST" id="game-edit-form">
         {{ form.hidden_tag() }}
         <div class="form-grid">
             <div class="form-column data">
                 {{ text_field(form.name) }}
                 {{ text_field(form.tagline) }}
-                {{ text_field(form.description) }}
+
+                <div class="description-field">
+                    {{form.description.label(
+                        class_="field-title"
+                    )}}
+                    <p class="field-description">
+                        {{form.description.description}}
+                    </p>
+                    {{  form.description(
+                        id="wtform-description",
+                    ) }}
+                    <div id="quill-description"></div>
+                    {% if form.description.errors %}
+                        {% for error in form.description.errors %}
+                            <p class="error-message"> {{error}} </p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
                 {{ text_field(form.genre, "genre-display") }}
-                {{form.visibility()}}
-                {{form.dev_state()}}
+
+                <div class="form-field">
+                    <p class="field-title">Visibility</p>
+                    <p class="field-description">
+                        This determines if your game is visible to everyone.
+                    </p>
+                    {{ form.visibility() }}
+                </div>
+                <div class="form-field">
+                    <p class="field-title">Development State</p>
+                    <p class="field-description">
+                        Indicates the state of your games development to players.
+                    </p>
+                    {{ form.dev_state() }}
+                </div>
                 {{form.game_uploads()}}
             </div>
             <div class="form-column display-images">
@@ -50,7 +81,5 @@
     </form>
 </div>
 
-
-
-<!-- <script src="{{url_for('static', filename='scripts/game_description.js')}}" defer></script> -->
+<script src="{{url_for('static', filename='scripts/game_description.js')}}" defer></script>
 {% endblock %}

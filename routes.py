@@ -14,7 +14,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
 
-from extensions import db, hasher, login_manager
+from extensions import cleaner, db, hasher, login_manager
 from forms import GameEditForm, LoginForm, SignupForm
 from models import Game, Genre, User
 
@@ -136,7 +136,8 @@ def edit_game(game_id):
     game_edit_form.genre.choices = genres
 
     if game_edit_form.validate_on_submit():
-        print("worked")
+        print(game_edit_form.description.data)
+        print(cleaner.clean(game_edit_form.description.data))
         return redirect(url_for("main.games"))
     else:
         print("validate failed")
@@ -201,8 +202,3 @@ def internal_server_error(_error):
         return render_template("static_500.html")
 
     return render_template("500.html")
-
-
-@main_bp.route("/quilltest")
-def quill():
-    return render_template("quill.html")

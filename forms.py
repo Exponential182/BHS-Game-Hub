@@ -127,17 +127,23 @@ class GameEditForm(FlaskForm):
             Length(min=1, max=50),
         ]
     )
-    description = StringField()  # FIGURE OUT QUILL,js INTEGRATOIN
+
+    # Phantom field, hidden in page, to fill data into with js from quill
+    description = StringField()
     genre = SelectField(
         choices=["No Genres Available"]
     )
     visibility = RadioField(
         DataRequired(),
-        choices=["Visible", "Private"],
+        choices=[
+            "Visible ‒‒ Anyone can view the game",
+            "Private ‒‒ Only you can view the game",
+        ],
     )
     dev_state = RadioField(
         DataRequired(),
-        choices=["Complete", "Beta", "Prototype"],
+        choices=[
+            "Complete", "Beta", "Prototype"],
     )
     cover_image = FileField()
     images = MultipleFileField()

@@ -25,7 +25,7 @@ input[type="text"] {
 .form-column {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .form-field {
@@ -37,6 +37,7 @@ input[type="text"] {
 .field-title {
     font-weight: 600;
     color: #222222;
+    margin: 0;
 }
 
 .field-description {
@@ -52,6 +53,16 @@ input[type="text"] {
 
 ul li {
     list-style: none;
+    font-size: 1.05rem;
+}
+
+ul li label {
+    margin-left: 0.2rem;
+}
+
+.radio-description {
+    padding-left: 0.3rem;
+    color: #222222;
 }
 
 input:user-invalid {
@@ -62,4 +73,17 @@ input:user-invalid {
     font-size: 0.9rem;
     color: red;
     margin: 0.1rem 0rem;
+}
+
+#wtform-description {
+    display: none;
+}
+
+.description-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.ql-toolbar{
+    margin-top: 0.6rem;
 }
