@@ -16,21 +16,15 @@ class Game(Base):
     tagline: Mapped[str] = mapped_column()
     description: Mapped[str] = mapped_column()
     has_html: Mapped[bool] = mapped_column()
-    html_file_path: Mapped[str] = mapped_column()
-    has_windows: Mapped[bool] = mapped_column()
-    windows_file_path: Mapped[str] = mapped_column()
-    has_mac: Mapped[bool] = mapped_column()
-    mac_file_path: Mapped[str] = mapped_column()
-    has_linux: Mapped[bool] = mapped_column()
-    linux_file_path: Mapped[str] = mapped_column()
-    tags: Mapped[str] = mapped_column()
-    image_url: Mapped[str] = mapped_column()
-    overall_rating: Mapped[float] = mapped_column()
-    rating_count: Mapped[int] = mapped_column()
+    cover_image_url: Mapped[str] = mapped_column()
+    visibility: Mapped[bool] = mapped_column()
+    dev_state: Mapped[str] = mapped_column()
+    last_updated: Mapped[int] = mapped_column()
 
     # One to Many Links
     genre_id: Mapped[int] = mapped_column(ForeignKey("Genre.id"))
     genre: Mapped["Genre"] = relationship(back_populates="games")
+    files: Mapped[list["GameFile"]] = relationship()
 
     # Many to Many Link
     users: Mapped[list["User"]] = relationship(
@@ -65,6 +59,19 @@ class Genre(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
     games: Mapped[list["Game"]] = relationship(back_populates="genre")
+
+
+class GameFile(Base):
+    """Represents a game file."""
+
+    __tablename__ = "GameFile"
+    file_id: Mapped[int] = mapped_column(primary_key=True)
+    game_id: Mapped[int] = mapped_column(ForeignKey("Game.id"))
+    name: Mapped[str] = mapped_column()
+    is_html5: Mapped[bool] = mapped_column()
+    is_windows: Mapped[bool] = mapped_column()
+    is_mac: Mapped[bool] = mapped_column()
+    is_linux: Mapped[bool] = mapped_column()
 
 
 class UserGame(Base):

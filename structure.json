@@ -8,7 +8,7 @@
             "name": "Game",
             "withoutRowId": false,
             "strict": false,
-            "ddl": "CREATE TABLE Game (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, tagline TEXT, description TEXT, has_html INTEGER, genre_id TEXT REFERENCES Genre (id), cover_image_url TEXT, overall_rating REAL, rating_count INTEGER)",
+            "ddl": "CREATE TABLE Game (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, tagline TEXT, description TEXT, has_html INTEGER, genre_id TEXT REFERENCES Genre (id), cover_image_url TEXT, visibility INTEGER, dev_state TEXT, last_updated INTEGER)",
             "columns": [
                 {
                     "name": "id",
@@ -51,11 +51,15 @@
                     "type": "TEXT"
                 },
                 {
-                    "name": "overall_rating",
-                    "type": "REAL"
+                    "name": "visibility",
+                    "type": "INTEGER"
                 },
                 {
-                    "name": "rating_count",
+                    "name": "dev_state",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "last_updated",
                     "type": "INTEGER"
                 }
             ],
