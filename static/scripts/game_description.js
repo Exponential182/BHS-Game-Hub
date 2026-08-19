@@ -3,7 +3,7 @@ const toolbar_options = [
   ['bold', 'italic', 'underline'],
   ['link'], // 'image'], Add later if time
 
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
   [{ 'indent': '-1'}, { 'indent': '+1' }],
 
   [{ 'align': [] }],
@@ -17,8 +17,12 @@ const quill = new Quill('#quill-description', {
 });
 
 const game_form = document.getElementById("game-edit-form");
-console.log(game_form)
 game_form.addEventListener("submit", (event) => {
-    const true_description = document.getElementById("wtform-description");
-    true_description.value = quill.root.innerHTML;
+  const true_description = document.getElementById("wtform-description");
+  true_description.value = quill.root.innerHTML;
 });
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const true_description = document.getElementById("wtform-description");
+  quill.root.innerHTML = true_description.value;
+})

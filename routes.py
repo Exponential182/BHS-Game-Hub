@@ -1,3 +1,5 @@
+from time import time
+
 from argon2.exceptions import VerifyMismatchError
 from flask import (
     Blueprint,
@@ -11,7 +13,7 @@ from flask import (
     url_for,
 )
 from flask_login import current_user, login_required, login_user, logout_user
-from sqlalchemy import select
+from sqlalchemy import delete, insert, select, update
 from sqlalchemy.exc import NoResultFound
 
 from extensions import cleaner, db, hasher, login_manager
@@ -98,7 +100,8 @@ def logout():
 @main_bp.route("/")
 def games():
     """Render the game catelouge page."""
-    statement = select(Game)
+    statement = select(Game).order_by(Game.last_updated.desc())
+    statement = statement.where(Game.visibility)
     genre_search = request.args.get("genre", default=None)
 
     if genre_search is not None:
@@ -135,32 +138,68 @@ def edit_game(game_id):
     genres = [row[0] for row in genres]  # Fix Format
     game_edit_form.genre.choices = genres
 
-    if game_edit_form.validate_on_submit():
-        print(game_edit_form.description.data)
-        print(cleaner.clean(game_edit_form.description.data))
-        return redirect(url_for("main.games"))
-    else:
-        print("validate failed")
-
     # New game check
     if game_id == -1:
         game_exists = False
 
-    # Invalid game id check
+    # Unused game id check
     existing_game_stmt = select(Game).where(Game.id == game_id)
     try:
-        db.session.execute(existing_game_stmt).one()
+        data: tuple = db.session.execute(existing_game_stmt).one()
+        game_data: Game = data[0]
     except NoResultFound:
         game_exists = False
 
+    if request.method == "POST":
+        if game_edit_form.validate_on_submit():
+            cleaned_html = cleaner.clean(game_edit_form.description.data)
+
+            # Shortening for writeability
+            form = game_edit_form
+            if game_exists:
+                db.session.execute(
+                    update(Game)
+                    .where(Game.id == game_id)
+                    .values(
+                        name=form.name.data,
+                        tagline=form.tagline.data,
+                        description=cleaned_html,
+                        has_html=False,  # TEMPORARY
+                        cover_image_url="",
+                        visibility=form.visibility.data,
+                        dev_state=form.dev_state.data,
+                        last_updated=int(time())
+                    )
+                )
+            else:
+                db.session.execute(
+                    insert(Game)
+                    .values(
+                        name=form.name.data,
+                        tagline=form.tagline.data,
+                        description=cleaned_html,
+                        has_html=False,  # TEMPORARY
+                        cover_image_url="",
+                        visibility=form.visibility.data,
+                        dev_state=form.dev_state.data,
+                        last_updated=int(time())
+                    )
+                )
+            db.session.commit()
+            flash("Game Uploaded successfully")
+            return redirect(url_for("main.games"))
+        else:
+            flash("Bad input")
+            return render_template("game_form.html", form=game_edit_form)
+
     if game_exists:
-        # Check identity then
-        # Popualte form with existing data
-        pass
-    else:
-        # Assign new project to current indentity
-        # Create new form
-        pass
+        game_edit_form.name.data = game_data.name
+        game_edit_form.tagline.data = game_data.tagline
+        game_edit_form.description.data = game_data.description
+        game_edit_form.genre.data = game_data.genre.name
+        # game_edit_form.genre.default = game_data.genre.name
+        game_edit_form.visibility.data = game_data.visibility
+        game_edit_form.dev_state.data = game_data.dev_state
 
     return render_template("game_form.html", form=game_edit_form)
 

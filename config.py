@@ -8,6 +8,7 @@ ALLOWED_TAGS = {
 ALLOWED_ATTRIBUTES = {
     "a": {"target", "href"},
     "img": {"src", "alt", "width", "height"},
+    "li": {"data-list"},
     "*": {"class"},
 }
 

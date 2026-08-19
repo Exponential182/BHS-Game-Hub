@@ -68,3 +68,8 @@
     color: #F5F5F5;
     border-radius: 0.6rem;
 }
+
+.ql-editor {
+    line-height: 2;
+    white-space: nowrap;
+}

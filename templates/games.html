@@ -48,7 +48,7 @@
                 {% for game in game_data %}
                     <div class="game-box">
                         <a class="game-box-link" href="/game/{{game.id}}">
-                            <img class="game-box-image" src="{{ game.image_url }}" alt="{{ game.name }}">
+                            <img class="game-box-image" src="{{ game.cover_image_url }}" alt="{{ game.name }}">
                             <p class="game-box-title title">{{ game.name }}</p>
                         </a>
                         <p class="game-box-genre">{{ game.genre.name }}</p>

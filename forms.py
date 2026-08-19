@@ -135,9 +135,10 @@ class GameEditForm(FlaskForm):
     )
     visibility = RadioField(
         DataRequired(),
+        coerce=int,
         choices=[
-            "Visible ‒‒ Anyone can view the game",
-            "Private ‒‒ Only you can view the game",
+            (1, "Visible ‒‒ Anyone can view the game"),
+            (0, "Private ‒‒ Only you can view the game"),
         ],
     )
     dev_state = RadioField(

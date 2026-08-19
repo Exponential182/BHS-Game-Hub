@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block style %}
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
 <link rel="stylesheet" href="{{url_for('static', filename='css/game.css')}}">
 {% endblock%}
 {% block content %}
@@ -14,9 +15,12 @@
         </div>
         {% endif %}
 
-        <p class="description-heading"></p>
         {# Ensured to be safe with bleach #}
-        {{game_data.description | safe}}
+        <div class="quill-confiner">
+            <div class="ql-editor">
+                {{game_data.description | safe}}
+            </div>
+        </div>
 
         {% if game_data.has_windows or game_data.has_mac or game_data.has_linux %}
         <div class="downloads">
