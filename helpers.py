@@ -45,3 +45,46 @@ def crop_and_centre_cover_image(image_stream):
 
     return output_data
 
+
+def FileSizeLimit(lim_in_mb, message="File too Large"):
+    def file_size_checker(form, field):
+        total_bytes = len(field.data.read())
+
+        if total_bytes > lim_in_mb * (1024 ** 2):
+            raise StopValidation(message)
+
+        # Reset Pointer
+        field.data.seek(0)
+
+    return file_size_checker
+
+
+def AllowedWebZip(max_total_size_mb, max_file_count=1000):
+    def valid_zip_checker(form, field: FileField):
+        if field.data:
+            byte_stream = io.BytesIO(field.data.read())
+
+            zip_file = ZipFile(byte_stream, "r")
+            info_list = zip_file.infolist()
+
+            if len(info_list) > max_file_count:
+                raise StopValidation("Too many files in zip.")
+
+            total_bytes = 0
+            has_index = False
+            for info in info_list:
+                if info.filename == 'index.html':
+                    has_index = True
+                if info.filename.endswith(".pck"):
+                    if info.file_size > 200 * (1024 ** 2):
+                        raise StopValidation("PCK too large")
+
+                total_bytes += info.file_size
+
+            if not has_index:
+                raise StopValidation("No index.html")
+
+            if total_bytes > max_total_size_mb * (1024 ** 2):
+                raise StopValidation("ZIP archive to large.")
+
+    return valid_zip_checker

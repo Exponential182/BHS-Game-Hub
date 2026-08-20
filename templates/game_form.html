@@ -83,6 +83,42 @@
                     {% endfor %}
                 </div>
 
+                <div>
+                    <label for="web-game-upload" class="w3-btn w3-teal real-file-input">Upload HTML5 Game (512 MB Limit)</label>
+                    <p class="file-name-display">File name: <span id="web-game-name">No Game uploaded</span></p>
+                    {{form.web_game_upload(
+                        id="web-game-upload",
+                        class_="hidden-input",
+                    )}}
+                    {% for error in form.web_game_upload.errors %}
+                        <p class="error-message">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label for="downloadable-game-upload" class="w3-btn w3-teal real-file-input">Upload Downloadable Game (1 GB Limit)</label>
+                    <p class="file-name-display">File name: <span id="downloadable-game-name">No Game uploaded</span></p>
+                    {{form.downloadable_game_upload(
+                        id="downloadable-game-upload",
+                        class_="hidden-input",
+                    )}}
+                    {% for error in form.downloadable_game_upload.errors %}
+                        <p class="error-message">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                
+                <div class="game-platform-support">
+                    <p class="game-platform-summary">Suported Platforms</p>
+                    <div>
+                        {{ form.has_windows(class_="w3-check") }} Windows
+                    </div>
+                    <div>
+                        {{ form.has_mac(class_="w3-check") }} Mac
+                    </div>
+                    <div>
+                        {{ form.has_linux(class_="w3-check") }} Linux
+                    </div>
+                </div>
             </div>
         </div>
         <div class="submit-container">

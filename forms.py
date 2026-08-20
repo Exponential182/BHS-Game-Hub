@@ -12,6 +12,8 @@ from wtforms import (
 )
 from wtforms.validators import DataRequired, EqualTo, Length
 
+from helpers import AllowedWebZip, FileSizeLimit
+
 
 class LoginForm(FlaskForm):
     """Form template for login page."""
@@ -150,21 +152,29 @@ class GameEditForm(FlaskForm):
     cover_image = FileField(
         validators=[
             FileAllowed(["jpg", "jpeg", "png"], "JPEG's and PNG's only!"),
+            FileSizeLimit(5)
         ],
         render_kw={"accept": ".jpg,.jpeg,.png"},
     )
     web_game_upload = FileField(
         validators=[
-            FileAllowed(["zip"], "ZIP archives only")
-        ]
+            FileAllowed(["zip"], "ZIP archives only"),
+            FileSizeLimit(512),
+            AllowedWebZip(512),
+        ],
+        render_kw={"accept": ".zip"},
     )
     downloadable_game_upload = FileField(
         validators=[
             FileAllowed(
                 ["exe", "zip", "gz", "tar.gz", "app", "dmg"],
                 "Invalid file type (try exe, zip, or .tar.gz)"
-            )
+            ),
+            FileSizeLimit(1024)
         ],
         render_kw={"accept": ".exe,.zip,.gx,tar.gz,.app,.dmg"}
     )
+    has_windows = BooleanField(label="Windows")
+    has_mac = BooleanField("Mac")
+    has_linux = BooleanField("Linux")
     save = SubmitField("Save")

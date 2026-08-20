@@ -152,8 +152,6 @@ def edit_game(game_id):
 
     if request.method == "POST":
         if game_edit_form.validate_on_submit():
-            cleaned_html = cleaner.clean(game_edit_form.description.data)
-
             # Shortening for writeability
             form = game_edit_form
 
