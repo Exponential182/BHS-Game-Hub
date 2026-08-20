@@ -87,3 +87,16 @@ input:user-invalid {
 .ql-toolbar{
     margin-top: 0.6rem;
 }
+
+.cover-image-input {
+    display: none;
+}
+
+.cover-image-real {
+    width: fit-content;
+}
+
+.cover-image-name-display {
+    margin: 0;
+
+}

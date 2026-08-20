@@ -1,3 +1,4 @@
+from pathlib import Path
 from time import time
 
 from argon2.exceptions import VerifyMismatchError
@@ -15,6 +16,7 @@ from flask import (
 from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy import delete, insert, select, update
 from sqlalchemy.exc import NoResultFound
+from werkzeug.utils import secure_filename
 
 from extensions import cleaner, db, hasher, login_manager
 from forms import GameEditForm, LoginForm, SignupForm
@@ -22,6 +24,8 @@ from models import Game, Genre, User
 
 main_bp = Blueprint("main", __name__)
 auth_bp = Blueprint("auth", __name__)
+
+base_directory = Path(__file__).resolve().parent
 
 
 # Flask-login's internal user loader (deprecated for lookups by current_user)
@@ -53,7 +57,7 @@ def login():
         try:
             if hasher.verify(user_info.password_hash, password):
                 login_user(user_info, remember=login_form.remember.data)
-                return redirect(url_for("main.gamess"))
+                return redirect(url_for("main.games"))
         except VerifyMismatchError:
             flash("Incorrect Username or Password")
     return render_template("login.html", form=login_form)
@@ -131,24 +135,18 @@ def game_page(game_id):
 @login_required
 def edit_game(game_id):
     game_edit_form = GameEditForm()
-    game_exists = True
+
+    game_valid_stmt = select(Game).where(Game.id == game_id)
+    game_data = db.session.execute(game_valid_stmt).one_or_none()
+    if game_data is None:
+        flash("Game does not exist!")
+        return redirect(url_for("main.games"))
+    game_data: Game = game_data[0]
 
     # Populate Genres for display and validation
     genres = list(db.session.execute(select(Genre.name)).all())
     genres = [row[0] for row in genres]  # Fix Format
     game_edit_form.genre.choices = genres
-
-    # New game check
-    if game_id == -1:
-        game_exists = False
-
-    # Unused game id check
-    existing_game_stmt = select(Game).where(Game.id == game_id)
-    try:
-        data: tuple = db.session.execute(existing_game_stmt).one()
-        game_data: Game = data[0]
-    except NoResultFound:
-        game_exists = False
 
     if request.method == "POST":
         if game_edit_form.validate_on_submit():
@@ -156,35 +154,15 @@ def edit_game(game_id):
 
             # Shortening for writeability
             form = game_edit_form
-            if game_exists:
-                db.session.execute(
-                    update(Game)
-                    .where(Game.id == game_id)
-                    .values(
-                        name=form.name.data,
-                        tagline=form.tagline.data,
-                        description=cleaned_html,
-                        has_html=False,  # TEMPORARY
-                        cover_image_url="",
-                        visibility=form.visibility.data,
-                        dev_state=form.dev_state.data,
-                        last_updated=int(time())
-                    )
-                )
+            file = form.cover_image.data
+            if file:
+                file_name = secure_filename(file.filename)
+                print(Path(base_directory / "static/games/1").resolve())
+                #save_path = Path(base_directory / "static" / "games" / )
+                file.save("output/" + file_name)
             else:
-                db.session.execute(
-                    insert(Game)
-                    .values(
-                        name=form.name.data,
-                        tagline=form.tagline.data,
-                        description=cleaned_html,
-                        has_html=False,  # TEMPORARY
-                        cover_image_url="",
-                        visibility=form.visibility.data,
-                        dev_state=form.dev_state.data,
-                        last_updated=int(time())
-                    )
-                )
+                game_data.cover_image_url = "/static/images/default_cover_image.png"
+                
             db.session.commit()
             flash("Game Uploaded successfully")
             return redirect(url_for("main.games"))
@@ -192,21 +170,26 @@ def edit_game(game_id):
             flash("Bad input")
             return render_template("game_form.html", form=game_edit_form)
 
-    if game_exists:
-        game_edit_form.name.data = game_data.name
-        game_edit_form.tagline.data = game_data.tagline
-        game_edit_form.description.data = game_data.description
+    # Prefill form
+    game_edit_form.name.data = game_data.name
+    game_edit_form.tagline.data = game_data.tagline
+    game_edit_form.description.data = game_data.description
+    if game_data.genre:
         game_edit_form.genre.data = game_data.genre.name
-        # game_edit_form.genre.default = game_data.genre.name
-        game_edit_form.visibility.data = game_data.visibility
-        game_edit_form.dev_state.data = game_data.dev_state
+    # game_edit_form.genre.default = game_data.genre.name
+    game_edit_form.visibility.data = game_data.visibility
+    game_edit_form.dev_state.data = game_data.dev_state
 
     return render_template("game_form.html", form=game_edit_form)
 
 
 @main_bp.route("/newgame")
 def new_game():
-    return redirect(url_for('main.edit_game', game_id=-1))
+    new_game_data = Game(visibility=0)
+    db.session.add(new_game_data)
+    db.session.commit()
+    new_game_id = new_game_data.id
+    return redirect(url_for('main.edit_game', game_id=new_game_id))
 
 
 @main_bp.route("/download/<path:file_path>")

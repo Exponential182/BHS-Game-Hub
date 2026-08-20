@@ -27,7 +27,7 @@
 {% block content %}
 
 <div class="form-container">
-    <form method="POST" id="game-edit-form">
+    <form method="POST" id="game-edit-form" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div class="form-grid">
             <div class="form-column data">
@@ -68,11 +68,17 @@
                     </p>
                     {{ form.dev_state() }}
                 </div>
-                {{form.game_uploads()}}
+                {{ form.web_game_upload() }}
+                {{ form.downloadable_game_upload() }}
             </div>
             <div class="form-column display-images">
-                {{form.cover_image()}}
-                {{form.images()}}
+                <label for="cover-image" class="w3-btn w3-teal cover-image-real">Upload Cover Image (5MB Limit)</label>
+                <p class="cover-image-name-display">File name: <span id="cover-image-name">No cover image uploaded</span></p>
+                <img id="cover-image-image" alt="Image Preview" width="90%">
+                {{form.cover_image(
+                    id="cover-image",
+                    class_="cover-image-input",
+                )}}
             </div>
         </div>
         {{ form.save(
@@ -81,5 +87,6 @@
     </form>
 </div>
 
+<script src="{{url_for('static', filename='scripts/game_form.js')}}" defer></script>
 <script src="{{url_for('static', filename='scripts/game_description.js')}}" defer></script>
 {% endblock %}
