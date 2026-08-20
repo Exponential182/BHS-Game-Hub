@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileRequired
 from wtforms import (
     BooleanField,
     EmailField,
@@ -144,9 +145,27 @@ class GameEditForm(FlaskForm):
     dev_state = RadioField(
         DataRequired(),
         choices=[
-            "Complete", "Beta", "Prototype"],
+            "Complete", "Beta", "Prototype"
+        ],
     )
-    cover_image = FileField()
-    images = MultipleFileField()
-    game_uploads = MultipleFileField()
+    cover_image = FileField(
+        validators=[
+            FileAllowed(["jpg", "jpeg", "png"], "JPEG's and PNG's only!"),
+        ],
+        render_kw={"accept": ".jpg,.jpeg,.png"}
+    )
+    web_game_upload = FileField(
+        validators=[
+            FileAllowed(["zip"], "ZIP archives only")
+        ]
+    )
+    downloadable_game_upload = FileField(
+        validators=[
+            FileAllowed(
+                ["exe", "zip", "gz", "tar.gz", "app", "dmg"],
+                "Invalid file type (try exe, zip, or .tar.gz)"
+            )
+        ],
+        render_kw={"accept": ".exe,.zip,.gx,tar.gz,.app,.dmg"}
+    )
     save = SubmitField("Save")
