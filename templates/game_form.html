@@ -68,22 +68,28 @@
                     </p>
                     {{ form.dev_state() }}
                 </div>
-                {{ form.web_game_upload() }}
-                {{ form.downloadable_game_upload() }}
             </div>
-            <div class="form-column display-images">
-                <label for="cover-image" class="w3-btn w3-teal cover-image-real">Upload Cover Image (5MB Limit)</label>
-                <p class="cover-image-name-display">File name: <span id="cover-image-name">No cover image uploaded</span></p>
-                <img id="cover-image-image" alt="Image Preview" width="90%">
-                {{form.cover_image(
-                    id="cover-image",
-                    class_="cover-image-input",
-                )}}
+            <div class="form-column uploads">
+                <div>
+                    <label for="cover-image" class="w3-btn w3-teal real-file-input">Upload Cover Image (5MB Limit)</label>
+                    <p class="cover-image-name-display">File name: <span id="cover-image-name">No cover image uploaded</span></p>
+                    <img id="cover-image-image" alt="Image Preview" width="90%">
+                    {{form.cover_image(
+                        id="cover-image",
+                        class_="hidden-input",
+                    )}}
+                    {% for error in form.cover_image.errors %}
+                        <p class="error-message">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
             </div>
         </div>
-        {{ form.save(
-            class_="w3-btn w3-teal",
-        ) }}
+        <div class="submit-container">
+            {{ form.save(
+                class_="w3-btn w3-teal submit-button",
+            ) }}
+        </div>
     </form>
 </div>
 

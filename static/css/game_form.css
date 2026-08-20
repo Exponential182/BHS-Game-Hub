@@ -88,15 +88,31 @@ input:user-invalid {
     margin-top: 0.6rem;
 }
 
-.cover-image-input {
+.hidden-input {
     display: none;
 }
 
-.cover-image-real {
+.real-file-input {
     width: fit-content;
 }
 
-.cover-image-name-display {
+.file-name-display {
     margin: 0;
 
+}
+
+.submit-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.submit-button {
+    margin: 0.6rem auto;
+    text-align: center;
+    width: 40%;
+}
+
+.game-platform-summary {
+    font-weight: 600;
+    margin: 0;
 }

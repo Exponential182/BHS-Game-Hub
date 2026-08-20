@@ -1,10 +1,9 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileAllowed, FileRequired
+from flask_wtf.file import FileAllowed
 from wtforms import (
     BooleanField,
     EmailField,
     FileField,
-    MultipleFileField,
     PasswordField,
     RadioField,
     SelectField,
@@ -152,7 +151,7 @@ class GameEditForm(FlaskForm):
         validators=[
             FileAllowed(["jpg", "jpeg", "png"], "JPEG's and PNG's only!"),
         ],
-        render_kw={"accept": ".jpg,.jpeg,.png"}
+        render_kw={"accept": ".jpg,.jpeg,.png"},
     )
     web_game_upload = FileField(
         validators=[

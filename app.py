@@ -19,6 +19,9 @@ def create_app():
     app.config["DOWNLOAD_FOLDER"] = "static/games/"
     app.config["UPLOAD_FOLDER"] = "static/games/"
 
+    # 1.56 GB to account for game uploads
+    app.config["MAX_CONTENT_LENGTH"] = 1600 * 1024 * 1024
+
     # Instance all imported objects
     db.init_app(app)
     login_manager.init_app(app)

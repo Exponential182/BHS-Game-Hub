@@ -14,12 +14,14 @@ from flask import (
     url_for,
 )
 from flask_login import current_user, login_required, login_user, logout_user
-from sqlalchemy import delete, insert, select, update
+from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
+from werkzeug.datastructures import FileStorage
 from werkzeug.utils import secure_filename
 
 from extensions import cleaner, db, hasher, login_manager
 from forms import GameEditForm, LoginForm, SignupForm
+from helpers import crop_and_centre_cover_image
 from models import Game, Genre, User
 
 main_bp = Blueprint("main", __name__)
@@ -154,17 +156,30 @@ def edit_game(game_id):
 
             # Shortening for writeability
             form = game_edit_form
-            file = form.cover_image.data
-            if file:
-                file_name = secure_filename(file.filename)
-                print(Path(base_directory / "static/games/1").resolve())
-                #save_path = Path(base_directory / "static" / "games" / )
-                file.save("output/" + file_name)
+
+            cleaned_html = cleaner.clean(game_edit_form.description.data)
+            game_data.description = cleaned_html
+
+            image_file = form.cover_image.data
+            if image_file:
+                image_file = FileStorage(
+                    crop_and_centre_cover_image(image_file)
+                )
+                cover_image_path = f"static/games/{game_id}/cover_image.png"
+                save_path = Path(base_directory / cover_image_path)
+                save_path.parent.mkdir(parents=True, exist_ok=True)
+                image_file.save(Path(base_directory / cover_image_path))
+                game_data.cover_image_url = cover_image_path
             else:
                 game_data.cover_image_url = "/static/images/default_cover_image.png"
-                
+
+            game_data.name = form.name.data
+            game_data.visibility = form.visibility.data
+            game_data.last_updated = int(time())
+            game_data.users.append(current_user)
+
             db.session.commit()
-            flash("Game Uploaded successfully")
+            flash("Game Saved successfully")
             return redirect(url_for("main.games"))
         else:
             flash("Bad input")
