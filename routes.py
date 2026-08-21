@@ -159,10 +159,8 @@ def download(file_path):
 
 # Redirect errors to specific pages to better handle crashes/bad urls.
 @main_bp.app_errorhandler(404)
-def page_not_found(_error):
+def page_not_found(_):
     """Render the 404 error page."""
-    _error = _error  # Fixes unsued variable errors.  # noqa: PLW0127
-
     # Removes layout from errors in iframes.
     if request.endpoint == "static":
         return render_template("static_404.html")
@@ -171,10 +169,8 @@ def page_not_found(_error):
 
 
 @main_bp.app_errorhandler(500)
-def internal_server_error(_error):
+def internal_server_error(_):
     """Render the 500 error page."""
-    _error = _error  # Fixes unsued variable errors.  # noqa: PLW0127
-
     # Removes layout from errors in iframes.
     if request.endpoint == "static":
         return render_template("static_500.html")
