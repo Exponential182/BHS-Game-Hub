@@ -41,6 +41,7 @@ def login():
     if login_form.validate_on_submit():
         username = login_form.username.data
         password = login_form.password.data
+
         try:
             statement = select(User).where(User.username == username)
             user_info = db.session.execute(statement.limit(1)).one()
@@ -48,6 +49,7 @@ def login():
         except NoResultFound:
             flash("Incorrect Username or Password. <br> The account may not exist.")
             return redirect(url_for("auth.login"))
+
         try:
             if hasher.verify(user_info.password_hash, password):
                 login_user(user_info, remember=login_form.remember.data)
@@ -66,6 +68,7 @@ def signup():
         username = signup_form.username.data
         password = signup_form.password.data
         repeat_password = signup_form.repeat_password.data
+
         if password == repeat_password:
             statement = select(User).where(User.email == email)
             user_info = db.session.execute(statement.limit(1)).first()
@@ -81,6 +84,8 @@ def signup():
             )
             db.session.add(new_user)
             db.session.commit()
+
+            # Login user to prevent having to login immeditaly after signup
             login_user(new_user, remember=signup_form.remember)
             return redirect(url_for("main.games"))
         else:
@@ -102,6 +107,7 @@ def games():
     statement = statement.where(Game.visibility)
     genre_search = request.args.get("genre", default=None)
 
+    # Prevents no results being returned
     if genre_search is not None:
         statement = statement.join(Genre).where(Genre.name == genre_search)
 
@@ -140,6 +146,7 @@ def profile(username):
         abort(404)
     user: User = user_data[0]
 
+    # Allows dynamic headings in page for your profile vs others profiles
     if current_user.is_authenticated and current_user.id == user.id:
         validated = True
     else:
@@ -153,7 +160,7 @@ def download(file_path):
     return send_from_directory(
         current_app.config["DOWNLOAD_FOLDER"],
         file_path,
-        as_attachment=True,
+        as_attachment=True,  # Prevents displaying file
     )
 
 
