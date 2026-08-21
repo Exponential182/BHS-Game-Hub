@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/games.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
+{% endblock %}
+{% block content %}
+<div class="profile">
+    <p class="profile-header title">{{user_data.username}}</p>
+
+    <p class="games-header">
+        {% if validated %}
+        Your Games
+        {% else %}
+        Their Games
+        {% endif %}
+    </p>
+
+    <div class="games">
+        {% if user_data.games %}
+            <div class="games-grid" id="games-grid">
+                {% for game in user_data.games %}
+                    <div class="game-box">
+                        <a class="game-box-link" href="/game/{{game.id}}">
+                            <img class="game-box-image" src="{{ game.cover_image_url }}" alt="{{ game.name }}">
+                            <p class="game-box-title title">{{ game.name }}</p>
+                        </a>
+                        <p class="game-box-genre">{{ game.genre.name }}</p>
+                        <p class="game-box-description">{{ game.tagline }}</p>
+                        <div class="game-box-compatibility">
+                            {% if game.has_html %}
+                                <p class="game-os-badge">
+                                    Play in Browser
+                                </p>
+                            {% endif %}
+                            {% if game.has_windows %}
+                                <p class="game-os-badge">
+                                    Windows
+                                </p>
+                            {% endif %}
+                            {% if game.has_mac %}
+                                <p class="game-os-badge">
+                                    Mac
+                                </p>
+                            {% endif %}
+                            {% if game.has_linux %}
+                                <p class="game-os-badge">
+                                    Linux
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p id="no-games-error" class="games-not-present">This user has no Games</p>
+        {% endif %}
+</div>
+
+
+{% endblock %}

@@ -11,6 +11,19 @@
     position: relative;
 }
 
+.game-title{
+    font-weight: 600;
+    font-size: 2.6rem;
+    margin: 0.6rem;
+    border-bottom: 0.2rem solid black;
+}
+
+.creators {
+    font-weight: 600;
+    margin: 0.4rem;
+    font-size: 1.5rem;
+}
+
 .fullscreen_button {
     position: absolute;
     right: 0;

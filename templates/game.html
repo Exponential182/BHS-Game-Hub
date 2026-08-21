@@ -6,6 +6,24 @@
 {% block content %}
 <div class="game-page-flex">
     <div class="game-page-primary-column">
+        <div class="game-header">
+            <p class="game-title title">
+                {{ game_data.name }}
+            </p>
+            <p class="creators">
+                Created By: 
+                {% if game_data.users %}
+                    {% for user in game_data.users %}
+                        <a href="{{url_for('main.profile', username=user.username)}}">{{user.username}}</a>
+                        {% if user != game_data.users[-1] %}
+                        , 
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    No One?
+                {% endif %}
+            </p>
+        </div>
         {% if game_data.has_html %}
         <div class="game-container">
             <iframe class="game-page-web-game" id="game" src="{{game_data.html_game_path}}" frameborder="0"></iframe>
@@ -15,11 +33,8 @@
         </div>
         {% endif %}
 
-        {# Ensured to be safe with bleach #}
-        <div class="quill-confiner">
-            <div class="ql-editor">
-                {{game_data.description | safe}}
-            </div>
+        <div>
+            {{game_data.description | safe}}
         </div>
 
         {% if game_data.download_game_path %}
@@ -52,5 +67,5 @@
 
     </div>
 </div>
-<script src="{{url_for('static', filename='scripts/fullscreen.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/game_page.js')}}" defer></script>
 {% endblock %}

@@ -1,6 +1,5 @@
 <nav class="navbar-flex title">
     <a href="{{url_for('main.games')}}" class="navbar-link">Home</a>
-    <a href="{{url_for('main.new_game')}}" class="navbar-link">Upload a Game</a>
     
     {% if current_user.is_authenticated %}
         <a href="{{url_for('auth.logout')}}" class="navbar-link flex-align-right">Logout</a>

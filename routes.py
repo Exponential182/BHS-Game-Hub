@@ -15,7 +15,7 @@ from flask import (
     send_from_directory,
     url_for,
 )
-from flask_login import current_user, login_required, login_user, logout_user
+from flask_login import AnonymousUserMixin, current_user, login_user, logout_user
 from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
 from werkzeug.datastructures import FileStorage
@@ -24,7 +24,7 @@ from werkzeug.utils import secure_filename
 from extensions import cleaner, db, hasher, login_manager
 from forms import GameEditForm, LoginForm, SignupForm
 from helpers import crop_and_centre_cover_image
-from models import Game, GameFile, Genre, User
+from models import Game, Genre, User
 
 main_bp = Blueprint("main", __name__)
 auth_bp = Blueprint("auth", __name__)
@@ -102,7 +102,7 @@ def signup():
 def logout():
     """Logout the current user."""
     logout_user()
-    return redirect(url_for("main.home"))
+    return redirect(url_for("main.games"))
 
 
 @main_bp.route("/")
@@ -129,10 +129,33 @@ def game_page(game_id):
     """Render the game specific page"""
     game_stmt = select(Game).where(Game.id == game_id)
 
-    game_info = db.session.execute(game_stmt).scalar_one_or_none()
+    game_info = db.session.execute(game_stmt).one_or_none()
     if game_info is None:
         abort(404)
-    return render_template("game.html", game_data=game_info)
+    game_info: Game = game_info[0]
+
+    return render_template(
+        "game.html",
+        game_data=game_info,
+    )
+
+
+@main_bp.route("/profile/<string:username>")
+def profile(username):
+    user_data = db.session.execute(
+        select(User).where(User.username == username)
+    ).one_or_none()
+
+    if not user_data:
+        abort(404)
+    user: User = user_data[0]
+
+    if current_user.is_authenticated and current_user.id == user.id:
+        validated = True
+    else:
+        validated = False
+
+    return render_template("profile.html", user_data=user, validated=validated)
 
 
 # @main_bp.route("/game/edit/<int(signed=True):game_id>", methods=["GET", "POST"])
