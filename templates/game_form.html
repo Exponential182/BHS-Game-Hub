@@ -72,8 +72,9 @@
             <div class="form-column uploads">
                 <div>
                     <label for="cover-image" class="w3-btn w3-teal real-file-input">Upload Cover Image (5MB Limit)</label>
-                    <p class="cover-image-name-display">File name: <span id="cover-image-name">No cover image uploaded</span></p>
-                    <img id="cover-image-image" alt="Image Preview" width="90%">
+                    <div>
+                        <img id="cover-image-image" src="/{{form.cover_image.description}}" alt="Image Preview" width="90%">
+                    </div>
                     {{form.cover_image(
                         id="cover-image",
                         class_="hidden-input",

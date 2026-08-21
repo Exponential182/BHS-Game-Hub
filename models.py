@@ -67,7 +67,7 @@ class GameFile(Base):
     __tablename__ = "GameFile"
     file_id: Mapped[int] = mapped_column(primary_key=True)
     game_id: Mapped[int] = mapped_column(ForeignKey("Game.id"))
-    name: Mapped[str] = mapped_column()
+    path: Mapped[str] = mapped_column()
     is_html5: Mapped[bool] = mapped_column()
     is_windows: Mapped[bool] = mapped_column()
     is_mac: Mapped[bool] = mapped_column()

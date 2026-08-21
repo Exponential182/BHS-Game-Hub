@@ -126,7 +126,7 @@ class GameEditForm(FlaskForm):
     tagline = StringField(
         description="A brief summary of your game for use on the home page.",
         validators=[
-            Length(min=1, max=50),
+            Length(min=1, max=100),
         ]
     )
 

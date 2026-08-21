@@ -1,5 +1,7 @@
 from pathlib import Path
+from shutil import rmtree
 from time import time
+from zipfile import ZipFile
 
 from argon2.exceptions import VerifyMismatchError
 from flask import (
@@ -22,7 +24,7 @@ from werkzeug.utils import secure_filename
 from extensions import cleaner, db, hasher, login_manager
 from forms import GameEditForm, LoginForm, SignupForm
 from helpers import crop_and_centre_cover_image
-from models import Game, Genre, User
+from models import Game, GameFile, Genre, User
 
 main_bp = Blueprint("main", __name__)
 auth_bp = Blueprint("auth", __name__)
@@ -166,10 +168,107 @@ def edit_game(game_id):
                 cover_image_path = f"static/games/{game_id}/cover_image.png"
                 save_path = Path(base_directory / cover_image_path)
                 save_path.parent.mkdir(parents=True, exist_ok=True)
-                image_file.save(Path(base_directory / cover_image_path))
+                image_file.save(save_path)
                 game_data.cover_image_url = cover_image_path
             else:
                 game_data.cover_image_url = "/static/images/default_cover_image.png"
+
+            web_upload = form.web_game_upload.data
+            if web_upload:
+                web_upload.stream.seek(0)
+                zipped_web = ZipFile(web_upload.stream, "r")
+
+                initial_extract_path = Path(
+                    base_directory / f"static/games/{game_id}/game_files/web_new/"
+                )
+                backup_path = Path(
+                    base_directory / f"static/games/{game_id}/game_files/web_old/"
+                )
+                primary_path = Path(
+                    base_directory / f"static/games/{game_id}/game_files/web/"
+                )
+
+                if not primary_path.is_dir():
+                    primary_path.mkdir(parents=True, exist_ok=True)
+
+                primary_path.rename(backup_path)
+
+                if initial_extract_path.is_dir():
+                    rmtree(initial_extract_path)
+
+                initial_extract_path.mkdir(parents=True, exist_ok=True)
+                try:
+                    zipped_web.extractall(initial_extract_path)
+                    extract_success = True
+                except ValueError:
+                    backup_path.rename(primary_path)
+                    extract_success = False
+
+                if extract_success:
+                    initial_extract_path.rename(primary_path)
+                    rmtree(backup_path)
+
+                    old_web_game = db.session.execute(
+                        select(GameFile).where(
+                            GameFile.game_id == game_id
+                        ).where(GameFile.is_html5)
+                    ).one_or_none()
+                    if old_web_game:
+                        db.session.remove(old_web_game[0])
+
+                    file_info = GameFile(
+                        game_id=game_id,
+                        path=(
+                            str(primary_path.relative_to(base_directory)) + "/index.html"
+                        ),
+                        is_html5=True,
+                        is_windows=False,
+                        is_mac=False,
+                        is_linux=False,
+                    )
+                    db.session.add(file_info)
+                    db.session.commit()
+
+            downloadable_game = form.downloadable_game_upload.data
+            if downloadable_game:
+                game: FileStorage = downloadable_game
+                old_game_stmt = select(GameFile).where(
+                    GameFile.game_id == game_id
+                ).where(
+                    GameFile.is_html5 == False
+                )
+
+                old_game = db.session.execute(old_game_stmt).one_or_none()
+                print(old_game)
+                if old_game:
+                    old_game: GameFile = old_game[0]
+                    old_game_path: Path = Path(
+                        base_directory / old_game.path.lstrip("/")
+                    )
+
+                    if old_game_path.is_file():
+                        old_game_path.unlink()
+                    db.session.delete(old_game)
+                    db.session.commit()
+
+                target_folder = f"static/games/{game_id}/game_files"
+                target_folder = Path(base_directory / target_folder)
+                target_folder.mkdir(parents=True, exist_ok=True)
+                file_name = secure_filename(game.filename)
+                target_file = Path(target_folder / file_name)
+                game.save(target_file)
+
+                print(str((target_file.relative_to(base_directory)).resolve()))
+                new_game = GameFile(
+                    game_id=game_id,
+                    path=str(target_file.relative_to(base_directory).resolve()),
+                    is_html5=False,
+                    is_windows=form.has_windows.data,
+                    is_mac=form.has_mac.data,
+                    is_linux=form.has_linux.data,
+                )
+                db.session.add(new_game)
+                db.session.commit()
 
             game_data.name = form.name.data
             game_data.visibility = form.visibility.data
@@ -189,7 +288,8 @@ def edit_game(game_id):
     game_edit_form.description.data = game_data.description
     if game_data.genre:
         game_edit_form.genre.data = game_data.genre.name
-    # game_edit_form.genre.default = game_data.genre.name
+    if game_data.cover_image_url:
+        game_edit_form.cover_image.description = game_data.cover_image_url
     game_edit_form.visibility.data = game_data.visibility
     game_edit_form.dev_state.data = game_data.dev_state
 

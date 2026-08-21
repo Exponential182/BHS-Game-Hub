@@ -7,20 +7,18 @@ const web_game_upload = document.getElementById("web-game-upload");
 const downloadable_game_upload = document.getElementById("downloadable-game-upload");
 
 function update_cover_image(event) {
-    const display_name = document.getElementById("cover-image-name");
     const display_image = document.getElementById("cover-image-image");
-
+    console.log("image")
     if (cover_image.files[0]?.size > max_image_size) {
         cover_image.value = ""
-        display_name.textContent = "File too large.";
+        display_image.src = ""
         return
     }
 
     if (cover_image.files && cover_image.files.length > 0) {
-        display_name.textContent = cover_image.files[0].name;
         display_image.src = URL.createObjectURL(cover_image.files[0])
     } else {
-        display_name.textContent = "No file selected.";
+        display_image.src = ""
     }
 }
 
@@ -56,12 +54,6 @@ function update_downloadable_game(event) {
     }
 }
 
-cover_image.addEventListener("change", update_cover_image);
+cover_image.addEventListener("change", update_cover_image)
 web_game_upload.addEventListener("change", update_web_game);
 downloadable_game_upload.addEventListener("change", update_downloadable_game);
-
-document.addEventListener("DOMContentLoaded", (event) => {
-    update_cover_image(event);
-    update_web_game(event);
-    update_downloadable_game(event);
-});
