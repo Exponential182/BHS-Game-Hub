@@ -4,20 +4,11 @@ An alternative tool to itch.io for hosting games developed with the posibility o
 
 ### Setup and Deployment
 #### Normal Setup
- - Clone the repository
+ - Clone or download the repository into an empty folder
  - Create a virtual environment (optional)
  - Install the packages in __requirements.txt__
+ - Empty the __/static/games/__ folder.
+ - Download the zipped game files from this [Google Drive folder.](https://drive.google.com/file/d/1B97I0J3GIudKHIsHUlUu-u3ZNy3zSwYt/view?usp=sharing)
+ - Extract the downloaded zip into the now empty __/static/games__. 
  - Run __app.py__ from this directory
 
-#### Server Deployment (WIP)
-
-First, REPLACE the secret key in app.py with a new random 256 bit hex string UNLESS you install the docker image directly.
-
-Then either:
- - Download the repo and deploy it to any server as per the normal setup.
-
-__OR__  
- - Compile the docker image using docker compose and the contained files.
- - Deploy this to your server
-
-This is the preffered method for deployment if applicable because it allows Gunicorn and Nginx to be used for improved server perfomance and thread handling.
