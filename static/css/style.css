@@ -68,8 +68,14 @@ header, footer {
     display: flex;
     flex-direction: row;
     min-height: 2rem;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    color: #F5F5F5;
     background-color: #106030;
+}
+
+.footer-message {
+    text-align: center;
+    margin: 0.2rem auto;
 }
 
 /* Collections Pages (Games or Jams) */

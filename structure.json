@@ -8,7 +8,7 @@
             "name": "Game",
             "withoutRowId": false,
             "strict": false,
-            "ddl": "CREATE TABLE Game (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, tagline TEXT, description TEXT, has_html INTEGER, genre_id TEXT REFERENCES Genre (id), cover_image_url TEXT, visibility INTEGER, dev_state TEXT, last_updated INTEGER)",
+            "ddl": "CREATE TABLE Game (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, tagline TEXT, description TEXT, html_game_path TEXT, has_html INTEGER, download_game_path TEXT, has_windows INTEGER, has_mac INTEGER, has_linux INTEGER, genre_id TEXT REFERENCES Genre (id), cover_image_url TEXT, visibility INTEGER, dev_state TEXT, last_updated INTEGER)",
             "columns": [
                 {
                     "name": "id",
@@ -33,7 +33,27 @@
                     "type": "TEXT"
                 },
                 {
+                    "name": "html_game_path",
+                    "type": "TEXT"
+                },
+                {
                     "name": "has_html",
+                    "type": "INTEGER"
+                },
+                {
+                    "name": "download_game_path",
+                    "type": "TEXT"
+                },
+                {
+                    "name": "has_windows",
+                    "type": "INTEGER"
+                },
+                {
+                    "name": "has_mac",
+                    "type": "INTEGER"
+                },
+                {
+                    "name": "has_linux",
                     "type": "INTEGER"
                 },
                 {
@@ -60,58 +80,6 @@
                 },
                 {
                     "name": "last_updated",
-                    "type": "INTEGER"
-                }
-            ],
-            "rows": [
-            ]
-        },
-        {
-            "type": "table",
-            "database": null,
-            "name": "GameFile",
-            "withoutRowId": false,
-            "strict": false,
-            "ddl": "CREATE TABLE GameFile (file_id INTEGER PRIMARY KEY AUTOINCREMENT, game_id INTEGER REFERENCES Game (id), name TEXT, is_html5 INTEGER, is_windows INTEGER, is_mac INTEGER, is_linux INTEGER)",
-            "columns": [
-                {
-                    "name": "file_id",
-                    "type": "INTEGER",
-                    "constraints": [
-                        {
-                            "type": "PRIMARY KEY",
-                            "definition": "PRIMARY KEY AUTOINCREMENT"
-                        }
-                    ]
-                },
-                {
-                    "name": "game_id",
-                    "type": "INTEGER",
-                    "constraints": [
-                        {
-                            "type": "FOREIGN KEY",
-                            "definition": "REFERENCES Game (id)"
-                        }
-                    ]
-                },
-                {
-                    "name": "name",
-                    "type": "TEXT"
-                },
-                {
-                    "name": "is_html5",
-                    "type": "INTEGER"
-                },
-                {
-                    "name": "is_windows",
-                    "type": "INTEGER"
-                },
-                {
-                    "name": "is_mac",
-                    "type": "INTEGER"
-                },
-                {
-                    "name": "is_linux",
                     "type": "INTEGER"
                 }
             ],
